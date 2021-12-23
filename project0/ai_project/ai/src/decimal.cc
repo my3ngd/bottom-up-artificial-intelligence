@@ -99,6 +99,28 @@ real_t real_t::operator/(const real_t& other) const
 }
 
 
+// binary friend operators
+real_t operator+(const real_t& real, const int64_t& other)
+{
+    // code
+}
+
+real_t operator-(const real_t& real, const int64_t& other)
+{
+    // code
+}
+
+real_t operator*(const real_t& real, const int64_t& other)
+{
+    // code
+}
+
+real_t operator/(const real_t& real, const int64_t& other)
+{
+    // code
+}
+
+
 // assignment
 real_t& real_t::operator=(const real_t& other)
 {
@@ -144,6 +166,30 @@ real_t& real_t::operator*=(const real_t& other)
 }
 
 real_t& real_t::operator/=(const real_t& other)
+{
+    // code
+    return *this;
+}
+
+real_t& real_t::operator+=(const int64_t& other)
+{
+    // code
+    return *this;
+}
+
+real_t& real_t::operator-=(const int64_t& other)
+{
+    // code
+    return *this;
+}
+
+real_t& real_t::operator*=(const int64_t& other)
+{
+    // code
+    return *this;
+}
+
+real_t& real_t::operator/=(const int64_t& other)
 {
     // code
     return *this;

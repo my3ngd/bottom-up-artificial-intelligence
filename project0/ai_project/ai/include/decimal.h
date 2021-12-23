@@ -51,6 +51,12 @@ public:
     real_t operator*(const real_t&) const;
     real_t operator/(const real_t&) const;
 
+    // binary friend operators
+    friend real_t operator+(const real_t&, const int64_t&);
+    friend real_t operator-(const real_t&, const int64_t&);
+    friend real_t operator*(const real_t&, const int64_t&);
+    friend real_t operator/(const real_t&, const int64_t&);
+
     // assignment
     real_t& operator=(const real_t&);
     real_t& operator=(const string&);
@@ -61,6 +67,10 @@ public:
     real_t& operator-=(const real_t&);
     real_t& operator*=(const real_t&);
     real_t& operator/=(const real_t&);
+    real_t& operator+=(const int64_t&);
+    real_t& operator-=(const int64_t&);
+    real_t& operator*=(const int64_t&);
+    real_t& operator/=(const int64_t&);
 
     // comparison
     bool operator==(const real_t&) const;
