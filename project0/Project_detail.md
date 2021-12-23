@@ -24,7 +24,9 @@ If you want to compile your code again, start from step 3.
 
 ## Insructions
 
-You need to implement the following APIs:
+You need to implement the following type and functions.
 
-+ TODO
++ `real_t`: a type for real number.
+
+    + TODO
 
