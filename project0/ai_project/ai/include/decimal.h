@@ -80,11 +80,6 @@ public:
     bool operator<=(const real_t&) const;
     bool operator>=(const real_t&) const;
 
-    // conversion
-    operator string() const;
-    operator int64_t() const;
-    operator mpz_class() const;
-
     // iostream
     friend std::ostream& operator<<(std::ostream&, const real_t&);
     friend std::istream& operator>>(std::istream&, real_t&);
