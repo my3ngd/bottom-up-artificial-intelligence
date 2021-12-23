@@ -26,7 +26,7 @@ If you want to compile your code again, start from step 3.
 
 ---
 
-## Insructions
+## Decimals
 
 You need to implement the following type, functions, constants.
 
@@ -47,6 +47,26 @@ You need to implement the following type, functions, constants.
 + Also, you must define the following constants using `real_t`:
     + `e = 2.71828182845904523536028747135266249775724709369995...`
     + `pi = 3.1415926535897932384626433832795028841971693993751...`
+
+## Matrix
+
+You should support matrix operations using the `real_t` defined above. 
+
+Implement `matrix_t` to represent a matrix. (Vector is considered a matrix with row or column of 1.)
+
++ `matrix_t` must support the following operations:
+    - unary operators `-`
+    - binary operators `+`, `-`, `*`, `/`
+    - assignment operators `=`, `+=`, `-=`, `*=`, `/=`
+    - iostream operators `>>`, `<<`
+
++ `matrix_t` also support the following functions:
+    - `trans()`: transpose of matrix
+    - `inverse()`: inverse of matrix
+    - `pow()`: which includes `inverse()`
+    - `det()`: determinant of matrix
+    - `trace()`: multiplication of diagonal entry of square matrix
+
 
 ---
 
