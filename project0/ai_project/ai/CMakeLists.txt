@@ -4,6 +4,7 @@ MESSAGE( LIBRARIES_CMAKELISTS_START )
 set(AI_SOURCE_DIR src)
 set(AI_SOURCES
   ${AI_SOURCE_DIR}/decimal.cc
+  ${AI_SOURCE_DIR}/matrix.cc
   # Add your sources here
   # ${AI_SOURCE_DIR}/foo/bar/your_source.cc
 )
@@ -12,6 +13,7 @@ set(AI_SOURCES
 set(AI_HEADER_DIR include)
 set(AI_HEADERS
   ${AI_HEADER_DIR}/decimal.h
+  ${AI_HEADER_DIR}/matrix.h
   # Add your headers here
   # ${AI_HEADER_DIR}/foo/bar/your_header.h
 )

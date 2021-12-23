@@ -1,4 +1,4 @@
-#include "decimal.h"
+#include "matrix.h"
 
 int main(int argc, char const *argv[])
 {
