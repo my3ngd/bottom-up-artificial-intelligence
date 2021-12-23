@@ -1,3 +1,13 @@
+# vscode compile options
+.vscode
+
+# gmp
+gmp-6.2.1/
+gmp-6.2.1.*
+
+# CMakeLists directory
+build
+
 # Prerequisites
 *.d
 
