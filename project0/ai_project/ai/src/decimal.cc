@@ -1,7 +1,5 @@
 #include "decimal.h"
 
-uint16_t max_precision = 100;
-
 
 // constructors
 real_t::real_t(void)
@@ -289,6 +287,7 @@ real_t atan(const real_t& real)
     // code
 }
 
+/*
 real_t sinh(const real_t& real)
 {
     // code
@@ -319,3 +318,4 @@ real_t atanh(const real_t& real)
     // code
 }
 
+// */

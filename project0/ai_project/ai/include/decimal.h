@@ -9,15 +9,18 @@ using std::string;
 using std::vector;
 using std::deque;
 
-extern uint16_t max_precision;
-
 #include "gmpxx.h"
+
+// under 32 digit
+const uint16_t MAX_PRECISION = 32;
+
 
 class real_t
 {
 private:
     mpz_class val;
     uint16_t precision;
+
 public:
     // constructors
     real_t(void);
@@ -96,12 +99,13 @@ real_t tan(const real_t&);
 real_t asin(const real_t&);
 real_t acos(const real_t&);
 real_t atan(const real_t&);
+/*
 real_t sinh(const real_t&);
 real_t cosh(const real_t&);
 real_t tanh(const real_t&);
 real_t asinh(const real_t&);
 real_t acosh(const real_t&);
 real_t atanh(const real_t&);
-
+// */
 
 #endif  // __MY3NGD_DECIMAL_H__
