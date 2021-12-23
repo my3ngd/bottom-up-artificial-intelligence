@@ -123,9 +123,10 @@ class matrix_t
 private:
     uint16_t rows;
     uint16_t cols;
-    vector<vector<real_t>> data;
 
 public:
+    vector<vector<real_t>> data;
+
     // constructors
     matrix_t(const char&);
     matrix_t(const uint16_t&, const uint16_t&);
