@@ -80,22 +80,22 @@ real_t real_t::operator--(int)
 
 
 // binary operators
-real_t real_t::operator+(const real_t& other) const
+real_t real_t::operator+(real_t other) const
 {
     // code
 }
 
-real_t real_t::operator-(const real_t& other) const
+real_t real_t::operator-(real_t other) const
 {
     // code
 }
 
-real_t real_t::operator*(const real_t& other) const
+real_t real_t::operator*(real_t other) const
 {
     // code
 }
 
-real_t real_t::operator/(const real_t& other) const
+real_t real_t::operator/(real_t other) const
 {
     // code
 }
@@ -245,123 +245,123 @@ std::istream& operator>>(std::istream& is, real_t& real)
 
 
 // other functions
-real_t abs(const real_t& real)
+real_t abs(real_t real)
 {
     // code
 }
 
-real_t sqrt(const real_t& real)
+real_t sqrt(real_t real)
 {
     // code
 }
 
-real_t pow(const real_t& real, const int64_t& exp)
+real_t pow(real_t real, int64_t exp)
 {
     // code
 }
 
-real_t pow(const real_t& real, const real_t& exp)
+real_t pow(real_t real, real_t exp)
 {
     // code
 }
 
-real_t floor(const real_t& real)
+real_t floor(real_t real)
 {
     // code
 }
 
-real_t ceil(const real_t& real)
+real_t ceil(real_t real)
 {
     // code
 }
 
-real_t round(const real_t& real)
+real_t round(real_t real)
 {
     // code
 }
 
-real_t trunc(const real_t& real)
+real_t trunc(real_t real)
 {
     // code
 }
 
-real_t frac(const real_t& real)
+real_t frac(real_t real)
 {
     // code
 }
 
-real_t exp(const real_t& real)
+real_t exp(real_t real)
 {
     // code
 }
 
-real_t log(const real_t& real)
+real_t log(real_t real)
 {
     // code
 }
 
-real_t log10(const real_t& real)
+real_t log10(real_t real)
 {
     // code
 }
 
-real_t sin(const real_t& real)
+real_t sin(real_t real)
 {
     // code
 }
 
-real_t cos(const real_t& real)
+real_t cos(real_t real)
 {
     // code
 }
 
-real_t tan(const real_t& real)
+real_t tan(real_t real)
 {
     // code
 }
 
-real_t asin(const real_t& real)
+real_t asin(real_t real)
 {
     // code
 }
 
-real_t acos(const real_t& real)
+real_t acos(real_t real)
 {
     // code
 }
 
-real_t atan(const real_t& real)
+real_t atan(real_t real)
 {
     // code
 }
 
 /*
-real_t sinh(const real_t& real)
+real_t sinh(real_t real)
 {
     // code
 }
 
-real_t cosh(const real_t& real)
+real_t cosh(real_t real)
 {
     // code
 }
 
-real_t tanh(const real_t& real)
+real_t tanh(real_t real)
 {
     // code
 }
 
-real_t asinh(const real_t& real)
+real_t asinh(real_t real)
 {
     // code
 }
 
-real_t acosh(const real_t& real)
+real_t acosh(real_t real)
 {
     // code
 }
 
-real_t atanh(const real_t& real)
+real_t atanh(real_t real)
 {
     // code
 }

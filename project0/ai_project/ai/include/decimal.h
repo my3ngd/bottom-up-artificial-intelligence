@@ -48,10 +48,10 @@ public:
     real_t operator--(int);
 
     // binary operators
-    real_t operator+(const real_t&) const;
-    real_t operator-(const real_t&) const;
-    real_t operator*(const real_t&) const;
-    real_t operator/(const real_t&) const;
+    real_t operator+(real_t) const;
+    real_t operator-(real_t) const;
+    real_t operator*(real_t) const;
+    real_t operator/(real_t) const;
 
     // binary friend operators
     friend real_t operator+(const real_t&, const int64_t&);
@@ -88,31 +88,31 @@ public:
 };
 
 // other
-real_t abs(const real_t&);
-real_t sqrt(const real_t&);
-real_t pow(const real_t&, const real_t&);
-real_t pow(const real_t&, const int64_t&);
-real_t floor(const real_t&);
-real_t ceil(const real_t&);
-real_t round(const real_t&);
-real_t trunc(const real_t&);
-real_t frac(const real_t&);
-real_t exp(const real_t&);
-real_t log(const real_t&);
-real_t log10(const real_t&);
-real_t sin(const real_t&);
-real_t cos(const real_t&);
-real_t tan(const real_t&);
-real_t asin(const real_t&);
-real_t acos(const real_t&);
-real_t atan(const real_t&);
+real_t abs(real_t);
+real_t sqrt(real_t);
+real_t pow(real_t, real_t);
+real_t pow(real_t, int64_t);
+real_t floor(real_t);
+real_t ceil(real_t);
+real_t round(real_t);
+real_t trunc(real_t);
+real_t frac(real_t);
+real_t exp(real_t);
+real_t log(real_t);
+real_t log10(real_t);
+real_t sin(real_t);
+real_t cos(real_t);
+real_t tan(real_t);
+real_t asin(real_t);
+real_t acos(real_t);
+real_t atan(real_t);
 /*
-real_t sinh(const real_t&);
-real_t cosh(const real_t&);
-real_t tanh(const real_t&);
-real_t asinh(const real_t&);
-real_t acosh(const real_t&);
-real_t atanh(const real_t&);
+real_t sinh(real_t);
+real_t cosh(real_t);
+real_t tanh(real_t);
+real_t asinh(real_t);
+real_t acosh(real_t);
+real_t atanh(real_t);
 // */
 
 

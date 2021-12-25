@@ -4,16 +4,16 @@
 // Matrices
 
 // constructors
-matrix_t::matrix_t(const char& options)
-{
-    // code
-}
 
 matrix_t::matrix_t(const uint16_t& rows, const uint16_t& cols)
 {
     // code
 }
 
+matrix_t::matrix_t(const uint16_t& rows, const uint16_t& cols, const char& options)
+{
+    // code
+}
 
 // getters and setters
 uint16_t matrix_t::get_rows() const
