@@ -218,9 +218,56 @@ matrix_t pow(const matrix_t& matrix, real_t real)
     return res;
 }
 
-real_t det(const matrix_t)
+// determinant using LU-factorization
+real_t det(const matrix_t& matrix)
 {
-    ;
+    // get determinant of matrix using LU-factorization
+    if (matrix.get_rows() != matrix.get_cols())
+        throw "matrix_t det(): invalid matrix dimensions: not square matrix";
+    
+    // copy matrix
+    matrix_t tmp(matrix);
+
+    // LU-factorization (copilot coded)
+    for (uint16_t i = 0; i < tmp.get_rows(); i++)
+    {
+        // find pivot
+        uint16_t pivot = i;
+        for (uint16_t j = i + 1; j < tmp.get_rows(); j++)
+            if (abs(tmp.data[j][i]) > abs(tmp.data[pivot][i]))
+                pivot = j;
+
+        // swap rows
+        if (pivot != i)
+            for (uint16_t j = 0; j < tmp.get_cols(); j++)
+                std::swap(tmp.data[i][j], tmp.data[pivot][j]);
+
+        // check if matrix is singular
+        if (tmp.data[i][i] == 0)
+            return 0;
+
+        // divide row by pivot
+        for (uint16_t j = 0; j < tmp.get_cols(); j++)
+            tmp.data[i][j] /= tmp.data[i][i];;
+        // real_t pivot_inv = real_t(1) / tmp.data[i][i];
+        // for (uint16_t j = 0; j < tmp.get_cols(); j++)
+        //     tmp.data[i][j] *= pivot_inv;
+
+        // subtract multiple of row from other rows
+        for (uint16_t j = 0; j < tmp.get_rows(); j++)
+            if (j != i)
+            {
+                real_t multiple = tmp.data[j][i];
+                for (uint16_t k = 0; k < tmp.get_cols(); k++)
+                    tmp.data[j][k] -= multiple * tmp.data[i][k];
+            }
+    }
+
+    // calculate determinant
+    real_t det = 1;
+    for (uint16_t i = 0; i < tmp.get_rows(); i++)
+        det *= tmp.data[i][i];
+    return det;
 }
 
 real_t trace(const matrix_t& matrix)
