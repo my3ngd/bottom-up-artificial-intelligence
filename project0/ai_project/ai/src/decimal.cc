@@ -52,8 +52,8 @@ real_t::real_t(const string& _str)
     }
     else
     {
-        this->val = _str.substr(0, _str.find('.'));
         this->precision = _str.substr(_str.find('.') + 1).length();
+        this->val = _str.substr(0, _str.find('.')) + _str.substr(_str.find('.') + 1);
     }
 }
 
@@ -310,7 +310,8 @@ real_t frac(real_t real)
 
 real_t exp(real_t real)
 {
-    // code
+    real_t e("2.7182818284590452353602874713526624977572470936999595749669676277240766303535475945713821785251664274");
+    return pow(e, real);
 }
 
 real_t log(real_t real)
@@ -325,27 +326,61 @@ real_t log10(real_t real)
 
 real_t sin(real_t real)
 {
-    // code
+    const uint16_t SIN_LOOP_COUNT = TAYLOR_LOOPS;
+    // get sin(real) in radians using the Taylor series
+    // sin(x) = x - x^3/3! + x^5/5! - x^7/7! + ...
+    real_t x = real;
+    real_t res = x;
+    real_t f = 1;
+    real_t sign = 1;
+    for (uint16_t i = 1; i < SIN_LOOP_COUNT; i++)
+    {
+        x *= -real*real / f;
+        res += x * sign;
+        sign *= -1;
+        f *= (i<<1|0)*(i<<1|1);
+    }
+    return res;
 }
 
 real_t cos(real_t real)
 {
-    // code
+    const uint16_t COS_LOOP_COUNT = TAYLOR_LOOPS;
+    // get cos(real) in radians using the Taylor series
+    // cos(x) = 1 - x^2/2! + x^4/4! - x^6/6! + ...
+    real_t x = real;
+    real_t res = 1;
+    real_t f = 1;
+    real_t sign = 1;
+    for (uint16_t i = 1; i < COS_LOOP_COUNT; i++)
+    {
+        x *= -real*real / f;
+        res += x * sign;
+        sign *= -1;
+        f *= (i*2-1)*(i*2);
+    }
+    return res;
 }
 
 real_t tan(real_t real)
 {
-    // code
+    // not easy to implement
+    return sin(real) / cos(real);
 }
 
 real_t asin(real_t real)
 {
-    // code
+    const uint16_t ASIN_LOOP_COUNT = TAYLOR_LOOPS;
+    // get asin(real) in radians using the Taylor series
+    // TODO: https://namu.wiki/w/%ED%85%8C%EC%9D%BC%EB%9F%AC%20%EA%B8%89%EC%88%98/%EB%AA%A9%EB%A1%9D#toc
+    // return res;
 }
 
 real_t acos(real_t real)
 {
-    // code
+    // acos(x) is pi/2 - asin(x)
+    const real_t half_PI = real_t("1.5707963267948966192313216916397514420985846996875529104874722961539082031431044993140174126710585339");
+    return half_PI - asin(real);
 }
 
 real_t atan(real_t real)

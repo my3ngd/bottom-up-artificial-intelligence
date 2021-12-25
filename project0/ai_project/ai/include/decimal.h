@@ -10,6 +10,7 @@ using std::vector;
 using std::deque;
 
 #include "gmpxx.h"
+const uint16_t TAYLOR_LOOPS = 100;
 
 // --------------------------------------------------------------------------------------------------------------------
 // real number
