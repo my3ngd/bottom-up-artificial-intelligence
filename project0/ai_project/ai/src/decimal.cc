@@ -314,7 +314,23 @@ real_t exp(real_t real)
     return pow(e, real);
 }
 
-real_t log(real_t real)
+real_t ln(real_t real)
+{
+    const uint16_t LN_LOOP_COUNT = 100;
+    // ln(1+x) = Sum(n=1...inf, (-1)^(n+1)*x^n/n)
+    real_t res = 0;
+    real_t x = real;
+    real_t sign = -1;
+    for (int i = 1; i < LN_LOOP_COUNT; i++)
+    {
+        res += sign * x / i;
+        x *= real;
+        sign *= -1;
+    }
+    return res;
+}
+
+real_t log(real_t real, real_t base)
 {
     // code
 }
