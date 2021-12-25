@@ -17,8 +17,8 @@ public:
     vector<vector<real_t>> data;
 
     // constructors
-    matrix_t(const char&);
     matrix_t(const uint16_t&, const uint16_t&);
+    matrix_t(const uint16_t&, const uint16_t&, const char&);
 
     // getters and setters
     uint16_t get_rows(void) const;
