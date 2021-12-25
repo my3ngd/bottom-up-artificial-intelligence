@@ -200,12 +200,10 @@ matrix_t pow(const matrix_t& matrix, real_t real)
 {
     if (matrix.get_cols() != matrix.get_rows())
         throw "matrix_t pow(): invalid matrix dimensions: not square matrix";
-    // TODO: real_t formatter (1.000 is int)
-    // TODO: real_t type checker (1.000 == 1 -> int)
-    // if (!is_int(real))
-    // {
-    //     throw "matrix_t pow(): invalid real number";
-    // }
+
+    if (!real.is_int())  // real is formated value now
+        throw "matrix_t pow(): invalid real number";
+
     matrix_t res(matrix.get_rows(), matrix.get_cols(), 'I');
     matrix_t tmp(matrix);
     while (real > 0)

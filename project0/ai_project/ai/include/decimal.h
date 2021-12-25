@@ -82,6 +82,9 @@ public:
     bool operator<=(const real_t&) const;
     bool operator>=(const real_t&) const;
 
+    bool is_int(void);
+    void remove_unused_zeros(void);
+
     // iostream
     friend std::ostream& operator<<(std::ostream&, const real_t&);
     friend std::istream& operator>>(std::istream&, real_t&);

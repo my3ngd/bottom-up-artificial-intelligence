@@ -219,6 +219,19 @@ bool real_t::operator<=(const real_t& other) const { return !(other < *this); }
 bool real_t::operator>=(const real_t& other) const { return !(*this < other); }
 
 
+
+bool real_t::is_int(void)
+{
+    this->remove_unused_zeros();
+    return this->precision == 0;
+}
+
+void real_t::remove_unused_zeros(void)
+{
+    for (; this->val%10 == 0 && this->precision > 0; this->precision--)
+        this->val /= 10;
+}
+
 // stream operators
 std::ostream& operator<<(std::ostream& os, const real_t& real)
 {
