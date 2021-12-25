@@ -4,9 +4,19 @@
 // Matrices
 
 // constructors
-matrix_t::matrix_t(const char& options)
+matrix_t::matrix_t(const char& option)
 {
-    // code
+    switch (option)
+    {
+    case '0':
+        break;
+    case 'I':
+    case 'i':
+        // Identity matrix
+        break;
+    default:
+        break;
+    }
 }
 
 matrix_t::matrix_t(const uint16_t& rows, const uint16_t& cols)
