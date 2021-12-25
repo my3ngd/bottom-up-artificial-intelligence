@@ -262,12 +262,25 @@ real_t sqrt(real_t real)
 
 real_t pow(real_t real, int64_t exp)
 {
-    // code
+    return pow(real, real_t(exp));
 }
 
 real_t pow(real_t real, real_t exp)
 {
-    // code
+    if (exp.is_int())
+    {
+        real_t res = 1;
+        while (exp > 0)
+        {
+            if (exp.get_val() % 2 == 1)
+                res *= real;
+            exp /= 2;
+            real *= real;
+        }
+        return res;
+    }
+    // TODO: implement non-integer exponents
+    // like power(2, 3.14)
 }
 
 real_t floor(real_t real)
