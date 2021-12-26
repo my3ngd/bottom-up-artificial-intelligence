@@ -120,5 +120,7 @@ real_t acosh(real_t);
 real_t atanh(real_t);
 // */
 
+extern real_t PI;
+extern real_t E;
 
 #endif  // __MY3NGD_DECIMAL_H__
