@@ -1,6 +1,14 @@
 #ifndef __MY3NGD_DECIMAL_H__
 #define __MY3NGD_DECIMAL_H__
 
+/* print precision digits:
+ * -1: flexible
+ *  0: no under point
+ *  1: 1 digit under point
+ * ...
+ */
+extern int print_precision;
+
 #include <bits/stdc++.h>
 using std::cin;
 using std::cout;

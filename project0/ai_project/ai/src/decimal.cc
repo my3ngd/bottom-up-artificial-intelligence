@@ -1,5 +1,7 @@
 #include "decimal.h"
 
+int print_precision = -1;
+
 real_t e("2.7182818284590452353602874713526624977572470936999595749669676277240766303535475945713821785251664274");
 real_t PI("3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679");
 
@@ -148,10 +150,28 @@ real_t real_t::operator*(real_t other) const
 
 real_t real_t::operator/(real_t other) const
 {
+    const uint16_t DEVIDE_PRECISION = 100;
     real_t ret = *this;
-    // TODO
-}
+    /* 나눗셈 연산
+     * 1. ret 자리수를 엄청 크게 설정함
+     * 2. other로 나눔
+     * 3. precision 조정
+     * 
+     * [ex] 123/4567
+     * 1. 123 -> 1230...0 (몇 개를 추가?)
+     * 2. 1230...0 / 4567 = ???
+     * 3. ??? -> precision 조정
+     */
+    for (int i = 0; i < DEVIDE_PRECISION; i++)
+        ret.val *= 10;
 
+    ret.val /= other.val;
+    ret.precision = DEVIDE_PRECISION + ret.precision - other.precision;
+    for (; ret.precision > MAX_PRECISION; ret.precision--)
+        ret.val /= 10;
+    ret.remove_unused_zeros();
+    return ret;
+}
 
 // binary friend operators
 real_t operator+(const real_t& real, const int64_t& other) { return real + real_t(other); }
@@ -238,8 +258,17 @@ void real_t::remove_unused_zeros(void)
 // stream operators
 std::ostream& operator<<(std::ostream& os, const real_t& real)
 {
-    // TODO
-    return os;
+    string output_string = real.val.get_str();
+    // +0.~~
+    if      (real.precision == output_string.size() && output_string[0] != '-')
+        output_string = "0." + output_string;
+    // -0.~~
+    else if (real.precision+1 == output_string.size() && output_string[0] == '-')
+        output_string = "-0." + output_string.substr(1);
+    // ~~.~~
+    else
+        output_string.insert(output_string.end()-real.precision, '.');
+    return os << output_string;
 }
 
 std::istream& operator>>(std::istream& is, real_t& real)
