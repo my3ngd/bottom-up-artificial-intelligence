@@ -31,7 +31,6 @@ public:
     matrix_t operator+(const matrix_t&) const;
     matrix_t operator-(const matrix_t&) const;
     matrix_t operator*(const matrix_t&) const;
-    matrix_t operator*(const real_t&) const;
     matrix_t operator/(const real_t&) const;
 
     // binary friend operators

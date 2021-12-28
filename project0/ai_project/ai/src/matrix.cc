@@ -50,11 +50,6 @@ matrix_t matrix_t::operator*(const matrix_t& other) const
     // code
 }
 
-matrix_t matrix_t::operator*(const real_t& other) const
-{
-    // code
-}
-
 matrix_t matrix_t::operator/(const real_t& other) const
 {
     // code
