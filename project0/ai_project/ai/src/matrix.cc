@@ -108,7 +108,12 @@ bool matrix_t::operator!=(const matrix_t& other) const
 
 
 // indexing
-vector<real_t>& matrix_t::operator[](uint16_t& index)
+vector<real_t>& matrix_t::operator[](const uint32_t& index)
+{
+    // code
+}
+
+vector<real_t>& matrix_t::operator[](const int32_t& index)
 {
     // code
 }
@@ -118,38 +123,36 @@ vector<real_t>& matrix_t::operator[](uint16_t& index)
 std::ostream& operator<<(std::ostream& os, matrix_t& matrix)
 {
     // code
-    return os;
 }
 
 std::istream& operator>>(std::istream& is, matrix_t& matrix)
 {
     // code
-    return is;
 }
 
 
 // other functions
-matrix_t trans(matrix_t& matrix)
+matrix_t trans(const matrix_t& matrix)
 {
     // code
 }
 
-matrix_t inverse(matrix_t& matrix)
+matrix_t inverse(const matrix_t& matrix)
 {
     // code
 }
 
-matrix_t pow(matrix_t& matrix, real_t real)
+matrix_t pow(const matrix_t& matrix, const real_t& real)
 {
     // code
 }
 
-real_t det(matrix_t)
+real_t det(const matrix_t& matrix)
 {
     // code
 }
 
-real_t trace(matrix_t& matrix)
+real_t trace(const matrix_t& matrix)
 {
     // code
 }
