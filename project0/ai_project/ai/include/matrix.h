@@ -16,38 +16,38 @@ private:
 
 public:
     // constructors
-    matrix_t(uint16_t&, uint16_t&);
-    matrix_t(uint16_t&, uint16_t&, char&);
+    matrix_t(const uint16_t&, const uint16_t&);
+    matrix_t(const uint16_t&, const uint16_t&, const char&);
 
     // getters and setters
-    uint16_t get_rows(void);
-    uint16_t get_cols(void);
+    uint16_t get_rows(void) const;
+    uint16_t get_cols(void) const;
 
     // unary operators
-    matrix_t operator-();
+    matrix_t operator-(void) const;
 
     // binary operators
-    matrix_t operator+(matrix_t&);
-    matrix_t operator-(matrix_t&);
-    matrix_t operator*(matrix_t&);
-    matrix_t operator/(real_t&);
+    matrix_t operator+(const matrix_t&) const;
+    matrix_t operator-(const matrix_t&) const;
+    matrix_t operator*(const matrix_t&) const;
+    matrix_t operator/(const real_t&)   const;
 
     // binary friend operators
-    friend matrix_t operator*(matrix_t&, real_t&);
+    friend matrix_t operator*(const matrix_t&, const real_t&);
     // no need to define friend operator/
 
     // assignment operators
-    matrix_t& operator=(matrix_t&);
+    matrix_t& operator=(const matrix_t&);
 
-    matrix_t& operator+=(matrix_t&);
-    matrix_t& operator-=(matrix_t&);
-    matrix_t& operator*=(matrix_t&);
-    matrix_t& operator*=(real_t&);
-    matrix_t& operator/=(real_t&);
+    matrix_t& operator+=(const matrix_t&);
+    matrix_t& operator-=(const matrix_t&);
+    matrix_t& operator*=(const matrix_t&);
+    matrix_t& operator*=(const real_t&);
+    matrix_t& operator/=(const real_t&);
 
     // comparison
-    bool operator==(matrix_t&);
-    bool operator!=(matrix_t&);
+    bool operator==(const matrix_t&) const;
+    bool operator!=(const matrix_t&) const;
 
     // indexing
     vector<real_t>& operator[](uint16_t&);

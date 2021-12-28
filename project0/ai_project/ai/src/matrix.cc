@@ -5,103 +5,103 @@
 
 // constructors
 
-matrix_t::matrix_t(uint16_t& rows, uint16_t& cols)
+matrix_t::matrix_t(const uint16_t& rows, const uint16_t& cols)
 {
     // code
 }
 
-matrix_t::matrix_t(uint16_t& rows, uint16_t& cols, char& options)
+matrix_t::matrix_t(const uint16_t& rows, const uint16_t& cols, const char& options)
 {
     // code
 }
 
 // getters and setters
-uint16_t matrix_t::get_rows()
+uint16_t matrix_t::get_rows(void) const
 {
     // code
 }
 
-uint16_t matrix_t::get_cols()
+uint16_t matrix_t::get_cols(void) const
 {
     // code
 }
 
 
 // unary operators
-matrix_t matrix_t::operator-()
+matrix_t matrix_t::operator-(void) const
 {
     // code
 }
 
 
 // binary operators
-matrix_t matrix_t::operator+(matrix_t& other)
+matrix_t matrix_t::operator+(const matrix_t& other) const
 {
     // code
 }
 
-matrix_t matrix_t::operator-(matrix_t& other)
+matrix_t matrix_t::operator-(const matrix_t& other) const
 {
     // code
 }
 
-matrix_t matrix_t::operator*(matrix_t& other)
+matrix_t matrix_t::operator*(const matrix_t& other) const
 {
     // code
 }
 
-matrix_t matrix_t::operator/(real_t& other)
+matrix_t matrix_t::operator/(const real_t& other) const
 {
     // code
 }
 
 
 // binary friend operators
-matrix_t operator*(matrix_t& matrix, real_t& other)
+matrix_t operator*(const matrix_t& matrix, const real_t& other)
 {
     // code
 }
 
 
 // assignment operators
-matrix_t& matrix_t::operator=(matrix_t& other)
+matrix_t& matrix_t::operator=(const matrix_t& other)
 {
     // code
 }
 
-matrix_t& matrix_t::operator+=(matrix_t& other)
+matrix_t& matrix_t::operator+=(const matrix_t& other)
 {
     // code
 }
 
-matrix_t& matrix_t::operator-=(matrix_t& other)
+matrix_t& matrix_t::operator-=(const matrix_t& other)
 {
     // code
 }
 
-matrix_t& matrix_t::operator*=(matrix_t& other)
+matrix_t& matrix_t::operator*=(const matrix_t& other)
 {
     // code
 }
 
-matrix_t& matrix_t::operator*=(real_t& other)
+matrix_t& matrix_t::operator*=(const real_t& other)
 {
     // code
 }
 
-matrix_t& matrix_t::operator/=(real_t& other)
+matrix_t& matrix_t::operator/=(const real_t& other)
 {
     // code
 }
 
 
 // comparison
-bool matrix_t::operator==(matrix_t& other)
+bool matrix_t::operator==(const matrix_t& other) const
 {
     // code
 }
 
-bool matrix_t::operator!=(matrix_t& other)
+bool matrix_t::operator!=(const matrix_t& other) const
 {
     // code
 }
