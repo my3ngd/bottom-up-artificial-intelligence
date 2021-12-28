@@ -134,16 +134,16 @@ matrix_t inverse(const matrix_t& matrix)
 
 matrix_t pow(const matrix_t& matrix, real_t real)
 {
-    ;
+    // code
 }
 
 real_t det(const matrix_t)
 {
-    ;
+    // code
 }
 
 real_t trace(const matrix_t& matrix)
 {
-    ;
+    // code
 }
 
