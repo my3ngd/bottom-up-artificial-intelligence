@@ -132,7 +132,7 @@ std::istream& operator>>(std::istream& is, matrix_t& matrix)
 
 
 // other functions
-matrix_t trans(const matrix_t& matrix)
+matrix_t trans(matrix_t& matrix)
 {
     // code
 }
@@ -142,17 +142,17 @@ matrix_t inverse(const matrix_t& matrix)
     // code
 }
 
-matrix_t pow(const matrix_t& matrix, const real_t& real)
+matrix_t pow(const matrix_t& matrix, real_t& real)
 {
     // code
 }
 
-real_t det(const matrix_t& matrix)
+real_t det(matrix_t& matrix)
 {
     // code
 }
 
-real_t trace(const matrix_t& matrix)
+real_t trace(matrix_t& matrix)
 {
     // code
 }
