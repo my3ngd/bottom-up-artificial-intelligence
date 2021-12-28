@@ -91,15 +91,6 @@ matrix_t matrix_t::operator*(const matrix_t& other) const
     return result;
 }
 
-matrix_t matrix_t::operator*(const real_t& other) const
-{
-    matrix_t result(this->rows, this->cols);
-    for (uint16_t i = 0; i < this->rows; i++)
-        for (uint16_t j = 0; j < this->cols; j++)
-            result.data[i][j] = this->data[i][j] * other;
-    return result;
-}
-
 matrix_t matrix_t::operator/(const real_t& other) const
 {
     matrix_t result(this->rows, this->cols);
