@@ -107,6 +107,13 @@ bool matrix_t::operator!=(const matrix_t& other) const
 }
 
 
+// indexing
+vector<real_t>& matrix_t::operator[](const uint16_t& index)
+{
+    // code
+}
+
+
 // stream operators
 std::ostream& operator<<(std::ostream& os, const matrix_t& matrix)
 {

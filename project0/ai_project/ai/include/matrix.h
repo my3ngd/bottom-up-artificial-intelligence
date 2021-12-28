@@ -12,10 +12,9 @@ class matrix_t
 private:
     uint16_t rows;
     uint16_t cols;
-
-public:
     vector<vector<real_t>> data;
 
+public:
     // constructors
     matrix_t(const uint16_t&, const uint16_t&);
     matrix_t(const uint16_t&, const uint16_t&, const char&);
@@ -49,6 +48,9 @@ public:
     // comparison
     bool operator==(const matrix_t&) const;
     bool operator!=(const matrix_t&) const;
+
+    // indexing
+    vector<real_t>& operator[](const uint16_t&);
 
     // iostream
     friend std::ostream& operator<<(std::ostream&, const matrix_t&);
