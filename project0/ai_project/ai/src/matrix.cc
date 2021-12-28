@@ -80,7 +80,15 @@ matrix_t matrix_t::operator-(const matrix_t& other) const
 
 matrix_t matrix_t::operator*(const matrix_t& other) const
 {
-    // code
+    if (this->cols != other.rows)
+        throw "invalid matrix dimensions";
+
+    matrix_t result(this->rows, other.cols);
+    for (uint16_t k = 0; k < this->cols; k++)
+        for (uint16_t i = 0; i < this->rows; i++)
+            for (uint16_t j = 0; j < other.cols; j++)
+                result.data[i][j] += this->data[i][k] * other.data[k][j];
+    return result;
 }
 
 matrix_t matrix_t::operator/(const real_t& other) const

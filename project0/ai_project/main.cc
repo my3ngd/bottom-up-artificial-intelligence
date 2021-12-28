@@ -2,15 +2,8 @@
 
 int main(int argc, char const *argv[])
 {
-    real_t a("123.456");
-    real_t b("-789.012");
-
-    cout << "a = " << a << endl;
-    cout << "b = " << b << endl;
-    cout << endl;
-    cout << "a + b = " << a + b << endl;
-    cout << "a - b = " << a - b << endl;
-    cout << "a * b = " << a * b << endl;
-    cout << "a / b = " << a / b << endl;
+    matrix_t m1(2, 2, 'i');
+    matrix_t m2(2, 2, '0');
+    m2[0][0] = 1;
     return 0;
 }
