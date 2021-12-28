@@ -38,6 +38,7 @@ matrix_t::matrix_t(const uint16_t& rows, const uint16_t& cols, const char& optio
                 this->data[i][j] = (i == j) ? 1 : 0;
         break;
     default:
+        cout << "Invalid option for matrix constructor: " << __FILE__ << " -> function " << __func__ << ", line " << __LINE__ << endl;
         throw "invalid option";
         break;
     }
@@ -87,7 +88,10 @@ matrix_t matrix_t::operator-(void) const
 matrix_t matrix_t::operator+(const matrix_t& other) const
 {
     if (this->rows != other.rows || this->cols != other.cols)
+    {
+        cout << "Invalid matrix dimensions: " << __FILE__ << " -> function " << __func__ << ", line " << __LINE__ << endl;
         throw "invalid matrix dimensions";
+    }
 
     matrix_t result(this->rows, this->cols);
     for (int i = 0; i < this->rows; i++)
@@ -104,7 +108,10 @@ matrix_t matrix_t::operator-(const matrix_t& other) const
 matrix_t matrix_t::operator*(const matrix_t& other) const
 {
     if (this->cols != other.rows)
+    {
+        cout << "Invalid matrix dimensions: " << __FILE__ << " -> function " << __func__ << ", line " << __LINE__ << endl;
         throw "invalid matrix dimensions";
+    }
 
     matrix_t result(this->rows, other.cols);
     for (int k = 0; k < this->cols; k++)
@@ -167,27 +174,40 @@ matrix_t& matrix_t::operator=(const vector<vector<real_t>>& other)
 matrix_t& matrix_t::operator=(const matrix_t& other)
 {
     if (this->rows != other.rows || this->cols != other.cols)
+    {
+        cout << "Invalid matrix dimensions: " << __FILE__ << " -> function " << __func__ << ", line " << __LINE__ << endl;
         throw "invalid matrix dimensions";
+    }
+    return *this = other.data;
 }
 
 matrix_t& matrix_t::operator+=(const matrix_t& other)
 {
     if (this->rows != other.rows || this->cols != other.cols)
+    {
+        cout << "Invalid matrix dimensions: " << __FILE__ << " -> function " << __func__ << ", line " << __LINE__ << endl;
         throw "invalid matrix dimensions";
+    }
     return *this = *this + other;
 }
 
 matrix_t& matrix_t::operator-=(const matrix_t& other)
 {
     if (this->rows != other.rows || this->cols != other.cols)
+    {
+        cout << "Invalid matrix dimensions: " << __FILE__ << " -> function " << __func__ << ", line " << __LINE__ << endl;
         throw "invalid matrix dimensions";
+    }
     return *this = *this - other;
 }
 
 matrix_t& matrix_t::operator*=(const matrix_t& other)
 {
     if (this->cols != other.rows)
+    {
+        cout << "Invalid matrix dimensions: " << __FILE__ << " -> function " << __func__ << ", line " << __LINE__ << endl;
         throw "invalid matrix dimensions";
+    }
     return *this = *this * other;
 }
 
@@ -225,14 +245,20 @@ bool matrix_t::operator!=(const matrix_t& other) const
 vector<real_t>& matrix_t::operator[](const uint32_t& index)
 {
     if (index >= this->rows)
+    {
+        cout << "Invalid index: " << __FILE__ << " -> function " << __func__ << ", line " << __LINE__ << endl;
         throw "invalid index";
+    }
     return this->data[index];
 }
 
 vector<real_t>& matrix_t::operator[](const int32_t& index)
 {
     if (index < 0 || index >= this->rows)
+    {
+        cout << "Invalid index: " << __FILE__ << " -> function " << __func__ << ", line " << __LINE__ << endl;
         throw "invalid index";
+    }
     return this->data[index];
 }
 
@@ -270,16 +296,26 @@ matrix_t trans(matrix_t& matrix)
 matrix_t inverse(const matrix_t& matrix)
 {
     if (matrix.get_rows() != matrix.get_cols())
+    {
+        cout << "Invalid matrix dimensions: " << __FILE__ << " -> function " << __func__ << ", line " << __LINE__ << endl;
         throw "matrix_t inverse(): invalid matrix dimensions: not square matrix";
+    }
+    // TODO: inverse matrix
 }
 
 matrix_t pow(const matrix_t& matrix, real_t real)
 {
     if (matrix.get_cols() != matrix.get_rows())
+    {
+        cout << "Invalid matrix dimensions: " << __FILE__ << " -> function " << __func__ << ", line " << __LINE__ << endl;
         throw "matrix_t pow(): invalid matrix dimensions: not square matrix";
+    }
 
     if (!real.is_int())  // real is formated value now
+    {
+        cout << "Invalid real value: " << __FILE__ << " -> function " << __func__ << ", line " << __LINE__ << endl;
         throw "matrix_t pow(): invalid real number";
+    }
 
     matrix_t res(matrix.get_rows(), matrix.get_cols(), 'I');
     matrix_t tmp(matrix);
@@ -297,8 +333,11 @@ real_t det(matrix_t& matrix)
 {
     // get determinant of matrix using LU-factorization
     if (matrix.get_rows() != matrix.get_cols())
+    {
+        cout << "Invalid matrix dimensions: " << __FILE__ << " -> function " << __func__ << ", line " << __LINE__ << endl;
         throw "matrix_t det(): invalid matrix dimensions: not square matrix";
-    
+    }
+
     // copy matrix
     matrix_t tmp(matrix);
 
@@ -347,7 +386,10 @@ real_t det(matrix_t& matrix)
 real_t trace(matrix_t& matrix)
 {
     if (matrix.get_rows() != matrix.get_cols())
+    {
+        cout << "Invalid matrix dimensions: " << __FILE__ << " -> function " << __func__ << ", line " << __LINE__ << endl;
         throw "matrix_t trace(): invalid matrix dimensions: not square matrix";
+    }
     real_t res = 0;
     for (int i = 0; i < matrix.get_rows(); i++)
         res *= matrix[i][i];

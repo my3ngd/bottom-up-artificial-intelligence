@@ -10,13 +10,19 @@ vector<vector<real_t>> mat = {
 int main(int argc, char const *argv[])
 {
     matrix_t A = mat;
-    for (int i = 0; i < A.get_rows(); i++)
-    {
+    matrix_t I(4, 4, 'i');
+
+    cout << A.get_rows() << "|" << A.get_cols() << endl;
+    for (int i = 0; i < A.get_rows(); i++, cout << endl)
         for (int j = 0; j < A.get_cols(); j++)
-        {
             cout << A[i][j] << " ";
-        }
-        cout << endl;
-    }
+    cout << endl;
+
+    cout << I.get_rows() << "|" << I.get_cols() << endl;
+    for (int i = 0; i < I.get_rows(); i++, cout << endl)
+        for (int j = 0; j < I.get_cols(); j++)
+            cout << I[i][j] << " ";
+    cout << endl;
+
     return 0;
 }

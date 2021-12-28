@@ -46,6 +46,7 @@ real_t::real_t(const string& _str)
         }
         if (!chk)
         {
+            cout << "invalid character exists at" << __FILE__ << ", line " << __LINE__ << endl;
             throw "invalid character";
         }
     }
