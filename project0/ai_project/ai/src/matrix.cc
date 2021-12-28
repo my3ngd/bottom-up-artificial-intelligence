@@ -43,6 +43,16 @@ matrix_t::matrix_t(const uint16_t& rows, const uint16_t& cols, const char& optio
     }
 }
 
+matrix_t::matrix_t(const vector<real_t>& vec)
+{
+    // code
+}
+
+matrix_t::matrix_t(const vector<vector<real_t>>& mat)
+{
+    // code
+}
+
 // getters and setters
 uint16_t matrix_t::get_rows(void) const { return this->rows; }
 
@@ -113,6 +123,16 @@ matrix_t operator*(const matrix_t& matrix, const real_t& other)
 
 
 // assignment operators
+matrix_t& matrix_t::operator=(const vector<real_t>& other)
+{
+    // code
+}
+
+matrix_t& matrix_t::operator=(const vector<vector<real_t>>& other)
+{
+    // code
+}
+
 matrix_t& matrix_t::operator=(const matrix_t& other)
 {
     if (this->rows != other.rows || this->cols != other.cols)

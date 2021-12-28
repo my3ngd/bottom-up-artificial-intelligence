@@ -18,6 +18,8 @@ public:
     // constructors
     matrix_t(const uint16_t&, const uint16_t&);
     matrix_t(const uint16_t&, const uint16_t&, const char&);
+    matrix_t(const vector<real_t>&);
+    matrix_t(const vector<vector<real_t>>&);
 
     // getters and setters
     uint16_t get_rows(void) const;
@@ -38,6 +40,8 @@ public:
 
     // assignment operators
     matrix_t& operator=(const matrix_t&);
+    matrix_t& operator=(const vector<real_t>&);
+    matrix_t& operator=(const vector<vector<real_t>>&);
 
     matrix_t& operator+=(const matrix_t&);
     matrix_t& operator-=(const matrix_t&);
