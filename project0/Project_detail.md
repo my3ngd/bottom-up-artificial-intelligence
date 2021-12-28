@@ -91,9 +91,8 @@ class matrix_t
 private:
     uint16_t rows;
     uint16_t cols;
-
-public:
     vector<vector<real_t>> data;
+public:
     /* member functions */
 }
 ```

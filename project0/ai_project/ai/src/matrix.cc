@@ -44,13 +44,19 @@ matrix_t::matrix_t(const uint16_t& rows, const uint16_t& cols, const char& optio
 }
 
 // getters and setters
-uint16_t matrix_t::get_rows() { return this->rows; }
+uint16_t matrix_t::get_rows(void) const
+{
+    // code
+}
 
-uint16_t matrix_t::get_cols() { return this->cols; }
+uint16_t matrix_t::get_cols(void) const
+{
+    // code
+}
 
 
 // unary operators
-matrix_t matrix_t::operator-()
+matrix_t matrix_t::operator-(void) const
 {
     matrix_t result(this->rows, this->cols);
     for (uint16_t i = 0; i < this->rows; i++)
@@ -61,7 +67,7 @@ matrix_t matrix_t::operator-()
 
 
 // binary operators
-matrix_t matrix_t::operator+(const matrix_t& other)
+matrix_t matrix_t::operator+(const matrix_t& other) const
 {
     if (this->rows != other.rows || this->cols != other.cols)
         throw "invalid matrix dimensions";
@@ -73,12 +79,12 @@ matrix_t matrix_t::operator+(const matrix_t& other)
     return result;
 }
 
-matrix_t matrix_t::operator-(const matrix_t& other)
+matrix_t matrix_t::operator-(const matrix_t& other) const
 {
     return (*this) + (-other);
 }
 
-matrix_t matrix_t::operator*(const matrix_t& other)
+matrix_t matrix_t::operator*(const matrix_t& other) const
 {
     if (this->cols != other.rows)
         throw "invalid matrix dimensions";
@@ -91,7 +97,7 @@ matrix_t matrix_t::operator*(const matrix_t& other)
     return result;
 }
 
-matrix_t matrix_t::operator/(const real_t& other)
+matrix_t matrix_t::operator/(const real_t& other) const
 {
     matrix_t result(this->rows, this->cols);
     for (uint16_t i = 0; i < this->rows; i++)
@@ -107,48 +113,61 @@ matrix_t operator*(const matrix_t& matrix, const real_t& other)
     matrix_t result(matrix.rows, matrix.cols);
     for (uint16_t i = 0; i < matrix.rows; i++)
         for (uint16_t j = 0; j < matrix.cols; j++)
-            result[i][j] = matrix[i][j] * other;
+            result[i][j] = matrix.data[i][j] * other;
     return result;
 }
 
 
 // assignment operators
-matrix_t& matrix_t::operator=(matrix_t& other)
+matrix_t& matrix_t::operator=(const matrix_t& other)
 {
     if (this->rows != other.rows || this->cols != other.cols)
         throw "invalid matrix dimensions";
-
-    for (uint16_t i = 0; i < this->rows; i++)
-        for (uint16_t j = 0; j < this->cols; j++)
-            this->data[i][j] = other[i][j];
-    return *this;
 }
 
-matrix_t& matrix_t::operator+=(matrix_t& other)   { return (*this) = (*this) + other; }
+matrix_t& matrix_t::operator+=(const matrix_t& other)
+{
+    // code
+}
 
-matrix_t& matrix_t::operator-=(matrix_t& other)   { return (*this) = (*this) - other; }
+matrix_t& matrix_t::operator-=(const matrix_t& other)
+{
+    // code
+}
 
-matrix_t& matrix_t::operator*=(matrix_t& other)   { return (*this) = (*this) * other; }
+matrix_t& matrix_t::operator*=(const matrix_t& other)
+{
+    // code
+}
 
-matrix_t& matrix_t::operator*=(real_t& other)     { return (*this) = (*this) * other; }
+matrix_t& matrix_t::operator*=(const real_t& other)
+{
+    // code
+}
 
-matrix_t& matrix_t::operator/=(real_t& other)     { return (*this) = (*this) / other; }
+matrix_t& matrix_t::operator/=(const real_t& other)
+{
+    // code
+}
 
 
 // comparison
-bool matrix_t::operator==(matrix_t& other)
+bool matrix_t::operator==(const matrix_t& other) const
 {
     if (this->rows != other.rows || this->cols != other.cols)
         return false;
 
     for (uint16_t i = 0; i < this->rows; i++)
         for (uint16_t j = 0; j < this->cols; j++)
-            if (this->data[i][j] != other[i][j])
+            if (this->data[i][j] != other.data[i][j])
                 return false;
     return true;
 }
 
-bool matrix_t::operator!=(matrix_t& other) { return !(*this == other); }
+bool matrix_t::operator!=(const matrix_t& other) const
+{
+    // code
+}
 
 
 // indexing
@@ -182,8 +201,8 @@ matrix_t trans(matrix_t& matrix)
 {
     // transpose of matrix
     matrix_t res(matrix.get_cols(), matrix.get_rows());
-    for (int i = 0; i < res.get_rows(); i++)
-        for (int j = 0; j < res.get_cols(); j++)
+    for (uint16_t i = 0; i < res.get_rows(); i++)
+        for (uint16_t j = 0; j < res.get_cols(); j++)
             res[i][j] = matrix[j][i];
     return res;
 }
@@ -214,7 +233,7 @@ matrix_t pow(matrix_t& matrix, real_t real)
     return res;
 }
 
-real_t det(matrix_t)
+real_t det(const matrix_t& matrix)
 {
     // get determinant of matrix using LU-factorization
     if (matrix.get_rows() != matrix.get_cols())
@@ -270,7 +289,7 @@ real_t trace(matrix_t& matrix)
     if (matrix.get_rows() != matrix.get_cols())
         throw "matrix_t trace(): invalid matrix dimensions: not square matrix";
     real_t res = 0;
-    for (int i = 0; i < matrix.get_rows(); i++)
+    for (uint16_t i = 0; i < matrix.get_rows(); i++)
         res *= matrix[i][i];
     return res;
 }

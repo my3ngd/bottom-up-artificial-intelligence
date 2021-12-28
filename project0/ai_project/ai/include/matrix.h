@@ -27,10 +27,10 @@ public:
     matrix_t operator-(void) const;
 
     // binary operators
-    matrix_t operator+(const matrix_t&);
-    matrix_t operator-(const matrix_t&);
-    matrix_t operator*(const matrix_t&);
-    matrix_t operator/(const real_t&);
+    matrix_t operator+(const matrix_t&) const;
+    matrix_t operator-(const matrix_t&) const;
+    matrix_t operator*(const matrix_t&) const;
+    matrix_t operator/(const real_t&)   const;
 
     // binary friend operators
     friend matrix_t operator*(const matrix_t&, const real_t&);
@@ -46,8 +46,8 @@ public:
     matrix_t& operator/=(const real_t&);
 
     // comparison
-    bool operator==(const matrix_t&);
-    bool operator!=(const matrix_t&);
+    bool operator==(const matrix_t&) const;
+    bool operator!=(const matrix_t&) const;
 
     // indexing
     vector<real_t>& operator[](uint16_t&);
