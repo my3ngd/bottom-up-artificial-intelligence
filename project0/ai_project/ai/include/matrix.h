@@ -24,13 +24,13 @@ public:
     uint16_t get_cols(void) const;
 
     // unary operators
-    matrix_t operator-() const;
+    matrix_t operator-(void) const;
 
     // binary operators
-    matrix_t operator+(const matrix_t&) const;
-    matrix_t operator-(const matrix_t&) const;
-    matrix_t operator*(const matrix_t&) const;
-    matrix_t operator/(const real_t&) const;
+    matrix_t operator+(const matrix_t&);
+    matrix_t operator-(const matrix_t&);
+    matrix_t operator*(const matrix_t&);
+    matrix_t operator/(const real_t&);
 
     // binary friend operators
     friend matrix_t operator*(const matrix_t&, const real_t&);
@@ -46,23 +46,23 @@ public:
     matrix_t& operator/=(const real_t&);
 
     // comparison
-    bool operator==(const matrix_t&) const;
-    bool operator!=(const matrix_t&) const;
+    bool operator==(const matrix_t&);
+    bool operator!=(const matrix_t&);
 
     // indexing
-    vector<real_t>& operator[](const uint16_t&);
+    vector<real_t>& operator[](uint16_t&);
 
     // iostream
-    friend std::ostream& operator<<(std::ostream&, const matrix_t&);
+    friend std::ostream& operator<<(std::ostream&, matrix_t&);
     friend std::istream& operator>>(std::istream&, matrix_t&);
 
 };
 
 // matrix operations
-matrix_t trans(const matrix_t&);
-matrix_t inverse(const matrix_t&);
-matrix_t pow(const matrix_t&, real_t);
-real_t det(const matrix_t&);
-real_t trace(const matrix_t&);
+matrix_t trans(matrix_t&);
+matrix_t inverse(matrix_t&);
+matrix_t pow(matrix_t&, real_t);
+real_t det(matrix_t&);
+real_t trace(matrix_t&);
 
 #endif  // __MATRIX_H__
