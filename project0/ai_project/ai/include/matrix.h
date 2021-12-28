@@ -60,8 +60,8 @@ public:
 
 // matrix operations
 matrix_t trans(matrix_t&);
-matrix_t inverse(matrix_t&);
-matrix_t pow(matrix_t&, real_t);
+matrix_t inverse(const matrix_t&);
+matrix_t pow(const matrix_t&, real_t);
 real_t det(matrix_t&);
 real_t trace(matrix_t&);
 

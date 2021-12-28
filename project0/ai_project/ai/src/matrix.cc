@@ -44,15 +44,9 @@ matrix_t::matrix_t(const uint16_t& rows, const uint16_t& cols, const char& optio
 }
 
 // getters and setters
-uint16_t matrix_t::get_rows(void) const
-{
-    // code
-}
+uint16_t matrix_t::get_rows(void) const { return this->rows; }
 
-uint16_t matrix_t::get_cols(void) const
-{
-    // code
-}
+uint16_t matrix_t::get_cols(void) const { return this->cols; }
 
 
 // unary operators
@@ -127,27 +121,33 @@ matrix_t& matrix_t::operator=(const matrix_t& other)
 
 matrix_t& matrix_t::operator+=(const matrix_t& other)
 {
-    // code
+    if (this->rows != other.rows || this->cols != other.cols)
+        throw "invalid matrix dimensions";
+    return *this = *this + other;
 }
 
 matrix_t& matrix_t::operator-=(const matrix_t& other)
 {
-    // code
+    if (this->rows != other.rows || this->cols != other.cols)
+        throw "invalid matrix dimensions";
+    return *this = *this - other;
 }
 
 matrix_t& matrix_t::operator*=(const matrix_t& other)
 {
-    // code
+    if (this->cols != other.rows)
+        throw "invalid matrix dimensions";
+    return *this = *this * other;
 }
 
 matrix_t& matrix_t::operator*=(const real_t& other)
 {
-    // code
+    return *this = *this * other;
 }
 
 matrix_t& matrix_t::operator/=(const real_t& other)
 {
-    // code
+    return *this = *this / other;
 }
 
 
@@ -166,19 +166,23 @@ bool matrix_t::operator==(const matrix_t& other) const
 
 bool matrix_t::operator!=(const matrix_t& other) const
 {
-    // code
+    return !(*this == other);
 }
 
 
 // indexing
 vector<real_t>& matrix_t::operator[](const uint32_t& index)
 {
-    // code
+    if (index >= this->rows)
+        throw "invalid index";
+    return this->data[index];
 }
 
 vector<real_t>& matrix_t::operator[](const int32_t& index)
 {
-    // code
+    if (index < 0 || index >= this->rows)
+        throw "invalid index";
+    return this->data[index];
 }
 
 
@@ -212,13 +216,13 @@ matrix_t trans(matrix_t& matrix)
     return res;
 }
 
-matrix_t inverse(matrix_t& matrix)
+matrix_t inverse(const matrix_t& matrix)
 {
     if (matrix.get_rows() != matrix.get_cols())
         throw "matrix_t inverse(): invalid matrix dimensions: not square matrix";
 }
 
-matrix_t pow(matrix_t& matrix, real_t real)
+matrix_t pow(const matrix_t& matrix, real_t real)
 {
     if (matrix.get_cols() != matrix.get_rows())
         throw "matrix_t pow(): invalid matrix dimensions: not square matrix";
@@ -238,7 +242,7 @@ matrix_t pow(matrix_t& matrix, real_t real)
     return res;
 }
 
-real_t det(const matrix_t& matrix)
+real_t det(matrix_t& matrix)
 {
     // get determinant of matrix using LU-factorization
     if (matrix.get_rows() != matrix.get_cols())
