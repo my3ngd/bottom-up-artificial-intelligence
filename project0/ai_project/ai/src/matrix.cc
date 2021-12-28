@@ -142,7 +142,7 @@ matrix_t inverse(const matrix_t& matrix)
     // code
 }
 
-matrix_t pow(const matrix_t& matrix, real_t& real)
+matrix_t pow(const matrix_t& matrix, real_t real)
 {
     // code
 }
