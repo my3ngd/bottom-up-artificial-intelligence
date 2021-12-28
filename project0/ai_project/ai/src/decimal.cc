@@ -268,6 +268,8 @@ std::ostream& operator<<(std::ostream& os, const real_t& real)
     // ~~.~~
     else
         output_string.insert(output_string.end()-real.precision, '.');
+    if (output_string.back() == '.')
+        output_string.pop_back();
     return os << output_string;
 }
 

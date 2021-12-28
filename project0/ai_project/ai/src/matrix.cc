@@ -45,12 +45,25 @@ matrix_t::matrix_t(const uint16_t& rows, const uint16_t& cols, const char& optio
 
 matrix_t::matrix_t(const vector<real_t>& vec)
 {
-    // code
+    this->rows = vec.size();
+    this->cols = 1;
+    this->data.resize(rows);
+    for (auto& col: this->data)
+        col.resize(cols);
+    for (int i = 0; i < rows; i++)
+        this->data[i][0] = vec[i];
 }
 
 matrix_t::matrix_t(const vector<vector<real_t>>& mat)
 {
-    // code
+    this->rows = mat.size();
+    this->cols = mat[0].size();
+    this->data.resize(rows);
+    for (auto& col: this->data)
+        col.resize(cols);
+    for (int i = 0; i < rows; i++)
+        for (int j = 0; j < cols; j++)
+            this->data[i][j] = mat[i][j];
 }
 
 // getters and setters
@@ -125,12 +138,30 @@ matrix_t operator*(const matrix_t& matrix, const real_t& other)
 // assignment operators
 matrix_t& matrix_t::operator=(const vector<real_t>& other)
 {
-    // code
+    // [n, 1] matrix
+    this->rows = other.size();
+    this->cols = 1;
+    this->data.resize(this->rows);
+    for (auto& col: this->data)
+        col.resize(this->cols);
+
+    for (int i = 0; i < this->rows; i++)
+        this->data[i][0] = other[i];
+    return *this;
 }
 
 matrix_t& matrix_t::operator=(const vector<vector<real_t>>& other)
 {
-    // code
+    this->rows = other.size();
+    this->cols = other[0].size();
+    this->data.resize(this->rows);
+    for (auto& col: this->data)
+        col.resize(this->cols);
+
+    for (int i = 0; i < this->rows; i++)
+        for (int j = 0; j < this->cols; j++)
+            this->data[i][j] = other[i][j];
+    return *this;
 }
 
 matrix_t& matrix_t::operator=(const matrix_t& other)
