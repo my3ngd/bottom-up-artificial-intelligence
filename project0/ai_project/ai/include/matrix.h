@@ -50,12 +50,12 @@ public:
     bool operator!=(const matrix_t&) const;
 
     // indexing
-    vector<real_t>& operator[](uint16_t&);
+    vector<real_t>& operator[](const uint32_t&);
+    vector<real_t>& operator[](const int32_t&);
 
     // iostream
     friend std::ostream& operator<<(std::ostream&, matrix_t&);
     friend std::istream& operator>>(std::istream&, matrix_t&);
-
 };
 
 // matrix operations

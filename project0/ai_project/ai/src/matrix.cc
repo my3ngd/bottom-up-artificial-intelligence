@@ -33,8 +33,8 @@ matrix_t::matrix_t(const uint16_t& rows, const uint16_t& cols, const char& optio
         this->data.resize(rows);
         for (auto& col: this->data)
             col.resize(cols);
-        for (uint16_t i = 0; i < rows; i++)
-            for (uint16_t j = 0; j < cols; j++)
+        for (int i = 0; i < rows; i++)
+            for (int j = 0; j < cols; j++)
                 this->data[i][j] = (i == j) ? 1 : 0;
         break;
     default:
@@ -59,8 +59,8 @@ uint16_t matrix_t::get_cols(void) const
 matrix_t matrix_t::operator-(void) const
 {
     matrix_t result(this->rows, this->cols);
-    for (uint16_t i = 0; i < this->rows; i++)
-        for (uint16_t j = 0; j < this->cols; j++)
+    for (int i = 0; i < this->rows; i++)
+        for (int j = 0; j < this->cols; j++)
             result[i][j] = -this->data[i][j];
     return result;
 }
@@ -73,8 +73,8 @@ matrix_t matrix_t::operator+(const matrix_t& other) const
         throw "invalid matrix dimensions";
 
     matrix_t result(this->rows, this->cols);
-    for (uint16_t i = 0; i < this->rows; i++)
-        for (uint16_t j = 0; j < this->cols; j++)
+    for (int i = 0; i < this->rows; i++)
+        for (int j = 0; j < this->cols; j++)
             result[i][j] = this->data[i][j] + other.data[i][j];
     return result;
 }
@@ -90,9 +90,9 @@ matrix_t matrix_t::operator*(const matrix_t& other) const
         throw "invalid matrix dimensions";
 
     matrix_t result(this->rows, other.cols);
-    for (uint16_t k = 0; k < this->cols; k++)
-        for (uint16_t i = 0; i < this->rows; i++)
-            for (uint16_t j = 0; j < other.cols; j++)
+    for (int k = 0; k < this->cols; k++)
+        for (int i = 0; i < this->rows; i++)
+            for (int j = 0; j < other.cols; j++)
                 result[i][j] += this->data[i][k] * other.data[k][j];
     return result;
 }
@@ -100,8 +100,8 @@ matrix_t matrix_t::operator*(const matrix_t& other) const
 matrix_t matrix_t::operator/(const real_t& other) const
 {
     matrix_t result(this->rows, this->cols);
-    for (uint16_t i = 0; i < this->rows; i++)
-        for (uint16_t j = 0; j < this->cols; j++)
+    for (int i = 0; i < this->rows; i++)
+        for (int j = 0; j < this->cols; j++)
             result[i][j] = this->data[i][j] / other;
     return result;
 }
@@ -111,8 +111,8 @@ matrix_t matrix_t::operator/(const real_t& other) const
 matrix_t operator*(const matrix_t& matrix, const real_t& other)
 {
     matrix_t result(matrix.rows, matrix.cols);
-    for (uint16_t i = 0; i < matrix.rows; i++)
-        for (uint16_t j = 0; j < matrix.cols; j++)
+    for (int i = 0; i < matrix.rows; i++)
+        for (int j = 0; j < matrix.cols; j++)
             result[i][j] = matrix.data[i][j] * other;
     return result;
 }
@@ -157,8 +157,8 @@ bool matrix_t::operator==(const matrix_t& other) const
     if (this->rows != other.rows || this->cols != other.cols)
         return false;
 
-    for (uint16_t i = 0; i < this->rows; i++)
-        for (uint16_t j = 0; j < this->cols; j++)
+    for (int i = 0; i < this->rows; i++)
+        for (int j = 0; j < this->cols; j++)
             if (this->data[i][j] != other.data[i][j])
                 return false;
     return true;
@@ -171,7 +171,12 @@ bool matrix_t::operator!=(const matrix_t& other) const
 
 
 // indexing
-vector<real_t>& matrix_t::operator[](uint16_t& index)
+vector<real_t>& matrix_t::operator[](const uint32_t& index)
+{
+    // code
+}
+
+vector<real_t>& matrix_t::operator[](const int32_t& index)
 {
     // code
 }
@@ -180,9 +185,9 @@ vector<real_t>& matrix_t::operator[](uint16_t& index)
 // stream operators
 std::ostream& operator<<(std::ostream& os, matrix_t& matrix)
 {
-    for (uint16_t i = 0; i < matrix.rows; i++)
+    for (int i = 0; i < matrix.rows; i++)
     {
-        for (uint16_t j = 0; j < matrix.cols; j++)
+        for (int j = 0; j < matrix.cols; j++)
             os << matrix[i][j] << " ";
         os << '\n';
     }
@@ -201,8 +206,8 @@ matrix_t trans(matrix_t& matrix)
 {
     // transpose of matrix
     matrix_t res(matrix.get_cols(), matrix.get_rows());
-    for (uint16_t i = 0; i < res.get_rows(); i++)
-        for (uint16_t j = 0; j < res.get_cols(); j++)
+    for (int i = 0; i < res.get_rows(); i++)
+        for (int j = 0; j < res.get_cols(); j++)
             res[i][j] = matrix[j][i];
     return res;
 }
@@ -243,17 +248,17 @@ real_t det(const matrix_t& matrix)
     matrix_t tmp(matrix);
 
     // LU-factorization (copilot coded)
-    for (uint16_t i = 0; i < tmp.get_rows(); i++)
+    for (int i = 0; i < tmp.get_rows(); i++)
     {
         // find pivot
         uint16_t pivot = i;
-        for (uint16_t j = i + 1; j < tmp.get_rows(); j++)
+        for (int j = i + 1; j < tmp.get_rows(); j++)
             if (abs(tmp[j][i]) > abs(tmp[pivot][i]))
                 pivot = j;
 
         // swap rows
         if (pivot != i)
-            for (uint16_t j = 0; j < tmp.get_cols(); j++)
+            for (int j = 0; j < tmp.get_cols(); j++)
                 std::swap(tmp[i][j], tmp[pivot][j]);
 
         // check if matrix is singular
@@ -261,25 +266,25 @@ real_t det(const matrix_t& matrix)
             return 0;
 
         // divide row by pivot
-        for (uint16_t j = 0; j < tmp.get_cols(); j++)
+        for (int j = 0; j < tmp.get_cols(); j++)
             tmp[i][j] /= tmp[i][i];;
         // real_t pivot_inv = real_t(1) / tmp[i][i];
-        // for (uint16_t j = 0; j < tmp.get_cols(); j++)
+        // for (int j = 0; j < tmp.get_cols(); j++)
         //     tmp[i][j] *= pivot_inv;
 
         // subtract multiple of row from other rows
-        for (uint16_t j = 0; j < tmp.get_rows(); j++)
+        for (int j = 0; j < tmp.get_rows(); j++)
             if (j != i)
             {
                 real_t multiple = tmp[j][i];
-                for (uint16_t k = 0; k < tmp.get_cols(); k++)
+                for (int k = 0; k < tmp.get_cols(); k++)
                     tmp[j][k] -= multiple * tmp[i][k];
             }
     }
 
     // calculate determinant
     real_t det = 1;
-    for (uint16_t i = 0; i < tmp.get_rows(); i++)
+    for (int i = 0; i < tmp.get_rows(); i++)
         det *= tmp[i][i];
     return det;
 }
@@ -289,7 +294,7 @@ real_t trace(matrix_t& matrix)
     if (matrix.get_rows() != matrix.get_cols())
         throw "matrix_t trace(): invalid matrix dimensions: not square matrix";
     real_t res = 0;
-    for (uint16_t i = 0; i < matrix.get_rows(); i++)
+    for (int i = 0; i < matrix.get_rows(); i++)
         res *= matrix[i][i];
     return res;
 }
