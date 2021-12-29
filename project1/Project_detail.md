@@ -55,27 +55,59 @@ In this project, you will implement forward propagation of artificial neural net
 
 As briefly introduced above, the active function plays a role in enabling artificial neural networks to solve nonlinear problems. We mainly use the following three functions as active functions.
 
-+ Sigmoid function:
+1. Sigmoid function:
 
     $$
-    f(x) = \frac{1}{1 + e^{-x}}
+    \sigma(x) = \frac{1}{1 + e^{-x}}
     $$
 
     The sigmoid function is an increasing function with a value of (0, 1). It can also be differentiated in all definitions. However, if x moves away from zero, the slope approaches zero, so if the number of layers increases too much, it tends to be disadvantageous to backpropagation.
 
-+ ReLU function:
+2. Tanh function:
 
     $$
-    f(x) = \max(0, x)
+    \tanh(x) = \frac{e^{2x} - 1}{e^{2x} + 1}
+    $$
+
+    It can also defined by sigmoid function.
+
+    $$
+    \tanh(x) = 2\sigma(2x) - 1
+    $$
+
+    Tanh can be expressed as sigmoid, so tanh shares the same disadvantage as sigmoid.
+
+3. ReLU function:
+
+    $$
+    ReLU(x) = \max(0, x)
     $$
 
     ReLU is an abbreviation for Reflected Linear Unit. It is designed to solve the problem that the slope of the Sigmoid function approaches zero. The disadvantage is that when x becomes 0, differentiation becomes impossible.
 
-+ Tanh function:
+4. Leaky ReLU:
 
     $$
-    f(x) = \tanh(x)
+    LReLU(x) = \max(\epsilon x, x),\ \epsilon \in \mathbb{R^+}\ (\epsilon\ is\ a\ small\ number,\ usually\ 0.01)
     $$
+
+    The LReLU is designed to secure one of the disadvantages of the ReLU. Existing ReLU has a problem that the slope becomes zero if the input value is negative, but LReLU compensates for these shortcomings.
+
+5. Parametric ReLU:
+
+    $$
+    PReLU(x) = \max(\alpha x, x)
+    $$
+
+    PReLU is similar to LReLU, but it also learns the slope in the region where x is negative.
+
+6. Exponential Linear Unit:
+
+    $$
+    ELU(x) = \max(\alpha (e^x-1), x)
+    $$
+
+    ELU covers all the advantages of ReLU, complementing the disadvantage of zero slope when x is negative. However, unlike other linear unit functions, the cost of calculating the `exp()` function is incurred.
 
 ---
 
