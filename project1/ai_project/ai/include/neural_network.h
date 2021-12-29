@@ -32,8 +32,10 @@ public:
     neural_network(void);
 
     // add layers
-    template<typename T>
-    void add_layer(T input_size, T output_size, ActivationFunction function);
+    void add_layer(int32_t input_size, int32_t output_size, ActivationFunction function);
+    void add_layer(uint32_t input_size, uint32_t output_size, ActivationFunction function);
+    void add_layer(int64_t input_size, int64_t output_size, ActivationFunction function);
+    void add_layer(uint64_t input_size, uint64_t output_size, ActivationFunction function);
 
     // run the neural network
     matrix_t run(matrix_t input);
