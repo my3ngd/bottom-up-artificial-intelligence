@@ -5,10 +5,10 @@
 
 // activation function
 enum ActivationFunction {
-    Sigmoid,
-    Tanh,
-    ReLU,
-    LReLU,
+    SIGMOID,
+    TANH,
+    RELU,
+    LRELU,
     ELU,
 };
 
@@ -17,7 +17,7 @@ matrix_t Sigmoid(const matrix_t&);
 matrix_t Tanh(const matrix_t&);
 matrix_t ReLU(const matrix_t&);
 matrix_t Leaky_ReLU(const matrix_t&);
-matrix_t ELU(const matrix_t&);
+matrix_t ExpLU(const matrix_t&);
 
 
 // neural network class
@@ -32,10 +32,10 @@ public:
     neural_network(void);
 
     // add layers
-    void add_layer(int32_t input_size, int32_t output_size, ActivationFunction function);
-    void add_layer(uint32_t input_size, uint32_t output_size, ActivationFunction function);
-    void add_layer(int64_t input_size, int64_t output_size, ActivationFunction function);
-    void add_layer(uint64_t input_size, uint64_t output_size, ActivationFunction function);
+    void add_layer(const  int32_t& input_size, const  int32_t& output_size, ActivationFunction function);
+    void add_layer(const uint32_t& input_size, const uint32_t& output_size, ActivationFunction function);
+    void add_layer(const  int64_t& input_size, const  int64_t& output_size, ActivationFunction function);
+    void add_layer(const uint64_t& input_size, const uint64_t& output_size, ActivationFunction function);
 
     // run the neural network
     matrix_t run(matrix_t input);

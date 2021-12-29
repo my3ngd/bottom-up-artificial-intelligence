@@ -26,7 +26,7 @@ matrix_t Leaky_ReLU(const matrix_t& mat)
 }
 
 
-matrix_t ELU(const matrix_t& mat)
+matrix_t ExpLU(const matrix_t& mat)
 {
     // code
 }
@@ -41,22 +41,22 @@ neural_network::neural_network(void)
 }
 
 // add layers
-void neural_network::add_layer(int32_t input_size, int32_t output_size, ActivationFunction function)
+void neural_network::add_layer(const int32_t& input_size,  const int32_t& output_size,  ActivationFunction function)
 {
     // code
 }
 
-void neural_network::add_layer(uint32_t input_size, uint32_t output_size, ActivationFunction function)
+void neural_network::add_layer(const uint32_t& input_size, const uint32_t& output_size, ActivationFunction function)
 {
     // code
 }
 
-void neural_network::add_layer(int64_t input_size, int64_t output_size, ActivationFunction function)
+void neural_network::add_layer(const int64_t& input_size,  const int64_t& output_size,  ActivationFunction function)
 {
     // code
 }
 
-void neural_network::add_layer(uint64_t input_size, uint64_t output_size, ActivationFunction function)
+void neural_network::add_layer(const uint64_t& input_size, const uint64_t& output_size, ActivationFunction function)
 {
     // code
 }
