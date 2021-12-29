@@ -5,18 +5,19 @@
 
 // activation function
 enum ActivationFunction {
-    SIGMOID,
-    RELU,
-    TANH,
-    LEAKY_RELU,
+    Sigmoid,
+    Tanh,
+    ReLU,
+    LReLU,
+    ELU,
 };
 
 
-matrix_t sigmoid(const matrix_t&);
-matrix_t relu(const matrix_t&);
-// matrix_t tanh(const matrix_t&);
-// matrix_t leaky_relu(const matrix_t&);
-// matrix_t softmax(const matrix_t&);
+matrix_t Sigmoid(const matrix_t&);
+matrix_t Tanh(const matrix_t&);
+matrix_t ReLU(const matrix_t&);
+matrix_t Leaky_ReLU(const matrix_t&);
+matrix_t ELU(const matrix_t&);
 
 
 // neural network class
