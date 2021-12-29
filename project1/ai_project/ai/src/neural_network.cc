@@ -2,31 +2,31 @@
 
 
 // activation function implementation
-matrix_t Sigmoid(const matrix_t& mat)
+matrix_t Sigmoid(matrix_t& mat)
 {
     // code
 }
 
 
-matrix_t Tanh(const matrix_t& mat)
+matrix_t Tanh(matrix_t& mat)
 {
     // code
 }
 
 
-matrix_t ReLU(const matrix_t& mat)
+matrix_t ReLU(matrix_t& mat)
 {
     // code
 }
 
 
-matrix_t Leaky_ReLU(const matrix_t& mat)
+matrix_t Leaky_ReLU(matrix_t& mat, const real_t& alpha)
 {
     // code
 }
 
 
-matrix_t ExpLU(const matrix_t& mat)
+matrix_t ExpLU(matrix_t& mat)
 {
     // code
 }
