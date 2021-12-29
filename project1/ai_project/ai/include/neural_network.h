@@ -13,11 +13,11 @@ enum ActivationFunction {
 };
 
 
-matrix_t Sigmoid(const matrix_t&);
-matrix_t Tanh(const matrix_t&);
-matrix_t ReLU(const matrix_t&);
-matrix_t Leaky_ReLU(const matrix_t&);
-matrix_t ExpLU(const matrix_t&);
+matrix_t Sigmoid(matrix_t&);
+matrix_t Tanh(matrix_t&);
+matrix_t ReLU(matrix_t&);
+matrix_t Leaky_ReLU(matrix_t&, const real_t&);
+matrix_t ExpLU(matrix_t&);
 
 
 // neural network class

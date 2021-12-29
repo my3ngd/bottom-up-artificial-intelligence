@@ -2,31 +2,47 @@
 
 
 // activation function implementation
-matrix_t Sigmoid(const matrix_t& mat)
+matrix_t Sigmoid(matrix_t& mat)
 {
-    // code
+    matrix_t result(mat.get_rows(), mat.get_cols());
+    for (int i = 0; i < mat.get_rows(); i++)
+        for (int j = 0; j < mat.get_cols(); j++)
+            result[i][j] = real_t(1) / (real_t(1) + exp(-mat[i][j]));
+    return result;
 }
 
 
-matrix_t Tanh(const matrix_t& mat)
+matrix_t Tanh(matrix_t& mat)
 {
-    // code
+    matrix_t result(mat.get_rows(), mat.get_cols());
+    for (int i = 0; i < mat.get_rows(); i++)
+        for (int j = 0; j < mat.get_cols(); j++)
+            result[i][j] = tanh(mat[i][j]);
+    return result;
 }
 
 
-matrix_t ReLU(const matrix_t& mat)
+matrix_t ReLU(matrix_t& mat)
 {
-    // code
+    matrix_t result(mat.get_rows(), mat.get_cols());
+    for (int i = 0; i < mat.get_rows(); i++)
+        for (int j = 0; j < mat.get_cols(); j++)
+            result[i][j] = mat[i][j] > 0 ? mat[i][j] : 0;
+    return result;
 }
 
 
-matrix_t Leaky_ReLU(const matrix_t& mat)
+matrix_t Leaky_ReLU(matrix_t& mat, const real_t& alpha)
 {
-    // code
+    matrix_t result(mat);
+    for (int i = 0; i < mat.get_rows(); i++)
+        for (int j = 0; j < mat.get_cols(); j++)
+            result[i][j] *= mat[i][j] > 0 ? real_t(1) : alpha;
+    return result;
 }
 
 
-matrix_t ExpLU(const matrix_t& mat)
+matrix_t ExpLU(matrix_t& mat)
 {
     // code
 }

@@ -438,36 +438,37 @@ real_t atan(real_t real)
     // code
 }
 
-/*
-real_t sinh(real_t real)
-{
-    // code
-}
 
-real_t cosh(real_t real)
-{
-    // code
-}
+// real_t sinh(real_t real)
+// {
+//     // code
+// }
+
+// real_t cosh(real_t real)
+// {
+//     // code
+// }
+
 
 real_t tanh(real_t real)
 {
     // code
 }
 
-real_t asinh(real_t real)
-{
-    // code
-}
 
-real_t acosh(real_t real)
-{
-    // code
-}
+// real_t asinh(real_t real)
+// {
+//     // code
+// }
 
-real_t atanh(real_t real)
-{
-    // code
-}
+// real_t acosh(real_t real)
+// {
+//     // code
+// }
 
-// */
+// real_t atanh(real_t real)
+// {
+//     // code
+// }
+
 

@@ -119,14 +119,14 @@ real_t tan(real_t);
 real_t asin(real_t);
 real_t acos(real_t);
 real_t atan(real_t);
-/*
-real_t sinh(real_t);
-real_t cosh(real_t);
+
+// real_t sinh(real_t);
+// real_t cosh(real_t);
 real_t tanh(real_t);
-real_t asinh(real_t);
-real_t acosh(real_t);
-real_t atanh(real_t);
-// */
+// real_t asinh(real_t);
+// real_t acosh(real_t);
+// real_t atanh(real_t);
+
 
 extern real_t PI;
 extern real_t E;
