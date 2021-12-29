@@ -37,6 +37,9 @@ public:
     void add_layer(const  int64_t& input_size, const  int64_t& output_size, ActivationFunction function);
     void add_layer(const uint64_t& input_size, const uint64_t& output_size, ActivationFunction function);
 
+    // describe the neural network
+    void describe(void);
+
     // run the neural network
     matrix_t run(matrix_t input);
 };

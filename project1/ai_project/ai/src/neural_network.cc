@@ -56,6 +56,7 @@ neural_network::neural_network(void)
     // code
 }
 
+
 // add layers
 void neural_network::add_layer(const int32_t& input_size,  const int32_t& output_size,  ActivationFunction function)
 {
@@ -76,6 +77,14 @@ void neural_network::add_layer(const uint64_t& input_size, const uint64_t& outpu
 {
     // code
 }
+
+
+// describe the neural network
+void neural_network::describe(void)
+{
+    // code
+}
+
 
 // run the neural network
 matrix_t neural_network::run(matrix_t input)
