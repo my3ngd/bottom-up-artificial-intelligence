@@ -1,6 +1,14 @@
 #ifndef __MY3NGD_DECIMAL_H__
 #define __MY3NGD_DECIMAL_H__
 
+/* print precision digits:
+ * -1: flexible
+ *  0: no under point
+ *  1: 1 digit under point
+ * ...
+ */
+extern int print_precision;
+
 #include <bits/stdc++.h>
 using std::cin;
 using std::cout;
@@ -10,6 +18,7 @@ using std::vector;
 using std::deque;
 
 #include "gmpxx.h"
+const uint16_t TAYLOR_LOOPS = 100;
 
 // --------------------------------------------------------------------------------------------------------------------
 // real number
@@ -82,6 +91,9 @@ public:
     bool operator<=(const real_t&) const;
     bool operator>=(const real_t&) const;
 
+    bool is_int(void);
+    void remove_unused_zeros(void);
+
     // iostream
     friend std::ostream& operator<<(std::ostream&, const real_t&);
     friend std::istream& operator>>(std::istream&, real_t&);
@@ -98,7 +110,8 @@ real_t round(real_t);
 real_t trunc(real_t);
 real_t frac(real_t);
 real_t exp(real_t);
-real_t log(real_t);
+real_t ln(real_t);
+real_t log(real_t, real_t);
 real_t log10(real_t);
 real_t sin(real_t);
 real_t cos(real_t);
@@ -115,5 +128,7 @@ real_t acosh(real_t);
 real_t atanh(real_t);
 // */
 
+extern real_t PI;
+extern real_t E;
 
 #endif  // __MY3NGD_DECIMAL_H__
