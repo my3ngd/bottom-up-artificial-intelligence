@@ -14,7 +14,30 @@ What the matrix represents is the connection between the two layers of the neura
 
 The synapse in which the i-th artificial neuron of layer L connects to the j-th artificial neuron of layer L+1 becomes the element of row i and column j of W.
 
-Therefore, if the L layer of the neural network has a artificial neuron and the L+1 layer has b artificial neurons, the size of W will be a×b.
+Therefore, if the L layer of the neural network has `A` artificial neuron and the L+1 layer has `B` artificial neurons, the size of W will be `A×B`.
+
+$$
+    W = \begin{pmatrix}
+        w_{11} & w_{12} & ... & w_{1B} \\
+        w_{21} & w_{22} & ... & w_{2B} \\
+        ... & ... & ... & ... \\
+        w_{A1} & w_{A2} & ... & w_{AB}
+    \end{pmatrix}
+$$
+
+Let's say that there is a matrix W as above. The data input from the layer is A-dimensional and the output is B-dimensional.
+
+$$
+    Z = W^T X + b
+$$
+
+X is an A-dimensional vector, and when WX is calculated, it becomes a B-dimensional vector. (We don't consider batch in this step.) The variable b representing bias is also a B-dimensional vector. The obtained B-dimensional vector Z enters the active function as an input.
+
+$$
+    Y_i = \sigma(Z_i),\ \sigma(x) = \frac{1}{1 + e^{-x}}
+$$
+
+The above example is a sigmoid function. Y, which will be used as the input of the next layer, can be calculated as above.
 
 However, since the operation of the matrix is linear, artificial neural networks made of matrix product alone cannot solve problems other than linear classification no matter how many layers exist.
 
@@ -22,9 +45,7 @@ Being able to solve only linear problems can be seen as the same as when there i
 
 Therefore, we will use the "activate function" to change the problem nonlinearly. Mainly used are sigmoid, ReLU, tanh, etc.
 
-In this project, you will implement forward propagation of artificial neural networks by referring to the figure below.
-
-{figure}
+In this project, you will implement forward propagation of artificial neural networks.
 
 ---
 
