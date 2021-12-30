@@ -79,7 +79,11 @@ real_t::real_t(const mpz_class& _mpz)
 // getters and setters
 mpz_class real_t::get_val(void) const { return this->val; }
 
+void real_t::set_val(const mpz_class& _val) { this->val = _val; }
+
 uint16_t real_t::get_precision(void) const { return this->precision; }
+
+void real_t::set_precision(const uint16_t& _precision) { this->precision = _precision; }
 
 
 // unary operators
@@ -259,18 +263,29 @@ void real_t::remove_unused_zeros(void)
 // stream operators
 std::ostream& operator<<(std::ostream& os, const real_t& real)
 {
+    if (real.get_val() == 0)
+        return os << "0";
+    if (real.get_precision() == 0)
+        return os << real.get_val();
     string output_string = real.val.get_str();
-    // +0.~~
-    if      (real.precision == output_string.size() && output_string[0] != '-')
-        output_string = "0." + output_string;
-    // -0.~~
-    else if (real.precision+1 == output_string.size() && output_string[0] == '-')
-        output_string = "-0." + output_string.substr(1);
-    // ~~.~~
-    else
-        output_string.insert(output_string.end()-real.precision, '.');
-    if (output_string.back() == '.')
-        output_string.pop_back();
+    bool is_signed = output_string[0] == '-';
+    if (is_signed)
+    {
+        os << '-';
+        output_string.erase(0, 1);
+    }
+
+    if (real.precision < output_string.size())
+    {
+        output_string.insert(output_string.begin() + (output_string.size() - real.precision), '.');
+        return os << output_string;
+    }
+    // under 1
+    os << "0";
+    if (real.get_precision() != output_string.size())
+        os << '.';
+    for (int i = 0; i < real.get_precision() - output_string.size(); i++)
+        os << "0";
     return os << output_string;
 }
 
@@ -309,7 +324,7 @@ real_t pow(real_t real, real_t exp)
         {
             if (exp.get_val() % 2 == 1)
                 res *= real;
-            exp /= 2;
+            exp = floor(exp/2);
             real *= real;
         }
         return res;
@@ -320,12 +335,17 @@ real_t pow(real_t real, real_t exp)
 
 real_t floor(real_t real)
 {
-    // code
+    uint16_t precision = real.get_precision();
+    for (int i = 0; i < precision; i++)
+        real.set_val(real.get_val() / 10);
+    real.set_precision(0);
+    return real;
 }
 
 real_t ceil(real_t real)
 {
-    // code
+    if (real.is_int())
+        return real;
 }
 
 real_t round(real_t real)
@@ -345,7 +365,19 @@ real_t frac(real_t real)
 
 real_t exp(real_t real)
 {
-    return pow(e, real);
+    if (real.is_int())
+        return pow(e, real);
+    // taylor series for exp(x)
+    real_t res = 1;
+    real_t x = real;
+    real_t f = 1;
+    for (real_t i = 1; i < 100; i++)
+    {
+        cout << "exp: " << i << endl;
+        f *= x / i;
+        res += f;
+    }
+    return res;
 }
 
 real_t ln(real_t real)
