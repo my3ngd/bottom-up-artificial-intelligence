@@ -10,6 +10,7 @@ enum ActivationFunction {
     RELU,
     LRELU,
     ELU,
+    LINEAR,
 };
 
 

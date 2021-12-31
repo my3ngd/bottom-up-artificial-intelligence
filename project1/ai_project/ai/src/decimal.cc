@@ -36,11 +36,20 @@ mpz_class real_t::get_val(void) const
     return this->val;
 }
 
+void real_t::set_val(const mpz_class& _val)
+{
+    this->val = _val;
+}
+
 uint16_t real_t::get_precision(void) const
 {
     return this->precision;
 }
 
+void real_t::set_precision(const uint16_t& _precision)
+{
+    this->precision = _precision;
+}
 
 // unary operators
 real_t real_t::operator-() const
