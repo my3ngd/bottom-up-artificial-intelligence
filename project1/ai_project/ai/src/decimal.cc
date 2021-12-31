@@ -1,5 +1,13 @@
 #include "decimal.h"
 
+/* TODO list
+ * output formmating
+ * power function
+ * log/ln
+ * asin
+ * tanh
+ */
+
 int print_precision = -1;
 
 real_t e("2.7182818284590452353602874713526624977572470936999595749669676277240766303535475945713821785251664274");
@@ -305,9 +313,12 @@ real_t abs(real_t real)
 
 real_t sqrt(real_t real)
 {
-    real.get_val() = sqrt(real.get_val());
+    if (real.get_val() < 0)
+    {
+        cout << "sqrt(real_t) : error : sqrt(-x) is undefined" << endl;
+        throw std::runtime_error("sqrt(real_t): negative number");
+    }
     // TODO
-    return real;
 }
 
 real_t pow(real_t real, int64_t exp)
@@ -346,11 +357,19 @@ real_t ceil(real_t real)
 {
     if (real.is_int())
         return real;
+    real_t res = floor(real);
+    res.set_val(res.get_val() + 1);
+    return res;
 }
 
 real_t round(real_t real)
 {
-    // code
+    if (real.is_int())
+        return real;
+    real_t res = floor(real);
+    if (real.get_val() % 10 >= 5)
+        res.set_val(res.get_val() + 1);
+    return res;
 }
 
 real_t trunc(real_t real)
@@ -382,18 +401,14 @@ real_t exp(real_t real)
 
 real_t ln(real_t real)
 {
-    const uint16_t LN_LOOP_COUNT = 100;
-    // ln(1+x) = Sum(n=1...inf, (-1)^(n+1)*x^n/n)
-    real_t res = 0;
-    real_t x = real;
-    real_t sign = -1;
-    for (int i = 1; i < LN_LOOP_COUNT; i++)
+    if (real.get_val() <= 0)
     {
-        res += sign * x / i;
-        x *= real;
-        sign *= -1;
+        cout << "ln(real_t) : error : ln(0) is undefined" << endl;
+        throw std::runtime_error("ln(real_t): negative number");
     }
-    return res;
+    const uint16_t LN_LOOP_COUNT = TAYLOR_LOOPS;
+    // ln(1+x) = Sum(n=1...inf, (-1)^(n+1)*x^n/n)
+    // TODO
 }
 
 real_t log(real_t real, real_t base)
