@@ -392,7 +392,6 @@ real_t exp(real_t real)
     real_t f = 1;
     for (real_t i = 1; i < 100; i++)
     {
-        cout << "exp: " << i << endl;
         f *= x / i;
         res += f;
     }
@@ -423,7 +422,7 @@ real_t log10(real_t real)
 
 real_t sin(real_t real)
 {
-    const uint16_t SIN_LOOP_COUNT = TAYLOR_LOOPS;
+    const uint16_t SIN_LOOP_COUNT = 10;
     // get sin(real) in radians using the Taylor series
     // sin(x) = x - x^3/3! + x^5/5! - x^7/7! + ...
     real_t x = real;
@@ -435,7 +434,7 @@ real_t sin(real_t real)
         x *= -real*real / f;
         res += x * sign;
         sign *= -1;
-        f *= (i<<1|0)*(i<<1|1);
+        f /= (i<<1|0)*(i<<1|1);
     }
     return res;
 }
@@ -497,10 +496,10 @@ real_t atan(real_t real)
 // }
 
 
-real_t tanh(real_t real)
-{
-    // code
-}
+// real_t tanh(real_t real)
+// {
+//     // code
+// }
 
 
 // real_t asinh(real_t real)
@@ -518,4 +517,11 @@ real_t tanh(real_t real)
 //     // code
 // }
 
+
+// derivative real_t by function f(x)
+real_t df(real_t (*f)(real_t), real_t x)
+{
+    const real_t EPSILON("0.0000001");
+    return (f(x + EPSILON) - f(x - EPSILON)) / (EPSILON * real_t(2));
+}
 

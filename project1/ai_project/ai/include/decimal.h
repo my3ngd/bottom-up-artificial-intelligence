@@ -18,13 +18,13 @@ using std::vector;
 using std::deque;
 
 #include "gmpxx.h"
-const uint16_t TAYLOR_LOOPS = 100;
+const uint16_t TAYLOR_LOOPS = 10;
 
 // --------------------------------------------------------------------------------------------------------------------
 // real number
 
 // under 32 digit
-const uint16_t MAX_PRECISION = 32;
+const uint16_t MAX_PRECISION = 8;
 
 class real_t
 {
@@ -122,11 +122,14 @@ real_t atan(real_t);
 
 // real_t sinh(real_t);
 // real_t cosh(real_t);
-real_t tanh(real_t);
+// real_t tanh(real_t);
 // real_t asinh(real_t);
 // real_t acosh(real_t);
 // real_t atanh(real_t);
 
+
+// derivative real_t by function f(x)
+real_t df(real_t (*f)(real_t), real_t);
 
 extern real_t PI;
 extern real_t E;

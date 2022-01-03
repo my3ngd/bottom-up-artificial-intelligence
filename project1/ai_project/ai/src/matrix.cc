@@ -8,6 +8,12 @@
 // Matrices
 
 // constructors
+matrix_t::matrix_t(void)
+{
+    rows = 0;
+    cols = 0;
+    data.clear();
+}
 
 matrix_t::matrix_t(const uint16_t& rows, const uint16_t& cols)
 {
@@ -225,6 +231,57 @@ vector<real_t>& matrix_t::operator[](const uint32_t& index)
 vector<real_t>& matrix_t::operator[](const int32_t& index)  { return this->operator[](static_cast<uint32_t>(index)); }
 
 
+// broadcast
+matrix_t matrix_t::broadcast(const int64_t& _rows, const int64_t& _cols) const
+{
+    if      (this->rows == 1 && this->cols == _cols)
+    {
+        matrix_t result(_rows, _cols);
+        for (int i = 0; i < _rows; i++)
+            for (int j = 0; j < _cols; j++)
+                result[i][j] = this->data[0][j];
+        return result;
+    }
+    else if (this->rows == _rows && this->cols == 1)
+    {
+        matrix_t result(_rows, _cols);
+        for (int i = 0; i < _rows; i++)
+            for (int j = 0; j < _cols; j++)
+                result[i][j] = this->data[i][0];
+        return result;
+    }
+    else
+    {
+        cout << "in broadcast, invalid matrix dimensions: " << __FILE__ << " -> function " << __func__ << ", line " << __LINE__ << endl;
+        cout << "(" << this->rows << ", " << this->cols << ") * (" << _rows << ", " << _cols << ")" << endl;
+        throw "invalid matrix dimensions";
+    }
+}
+
+
+// reduce dimension
+// [n, m] -> [1, m]
+matrix_t matrix_t::sum_rows(void) const
+{
+    matrix_t res = matrix_t(1, this->cols);
+    for (int j = 0; j < this->cols; j++)
+        for (int i = 0; i < this->rows; i++)
+            res[0][j] += this->data[i][j];
+    return res;
+}
+
+// [n, m] -> [n, 1]
+matrix_t matrix_t::sum_cols(void) const
+{
+    matrix_t res = matrix_t(this->rows, 1);
+    for (int i = 0; i < this->rows; i++)
+        for (int j = 0; j < this->cols; j++)
+            res[i][0] += this->data[i][j];
+    return res;
+}
+
+
+
 // stream operators
 std::ostream& operator<<(std::ostream& os, matrix_t& matrix)
 {
@@ -360,6 +417,21 @@ real_t trace(matrix_t& matrix)
     real_t res = 0;
     for (int i = 0; i < matrix.get_rows(); i++)
         res *= matrix[i][i];
+    return res;
+}
+
+// derivative
+matrix_t df(real_t (*f)(real_t), matrix_t x)
+{
+    // derivative of f(x)
+    matrix_t res(x.get_rows(), x.get_cols());
+    for (int i = 0; i < x.get_rows(); i++)
+    {
+        for (int j = 0; j < x.get_cols(); j++)
+        {
+            res[i][j] = df(f, x[i][j]);
+        }
+    }
     return res;
 }
 

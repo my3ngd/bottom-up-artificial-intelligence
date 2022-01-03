@@ -2,6 +2,8 @@
 
 
 // activation function implementation
+
+// matritix_t -> matrix_t
 matrix_t Sigmoid(matrix_t& mat)
 {
     matrix_t result(mat.get_rows(), mat.get_cols());
@@ -14,11 +16,7 @@ matrix_t Sigmoid(matrix_t& mat)
 
 matrix_t Tanh(matrix_t& mat)
 {
-    matrix_t result(mat.get_rows(), mat.get_cols());
-    for (int i = 0; i < mat.get_rows(); i++)
-        for (int j = 0; j < mat.get_cols(); j++)
-            result[i][j] = tanh(mat[i][j]);
-    return result;
+    return mat;
 }
 
 
@@ -32,8 +30,9 @@ matrix_t ReLU(matrix_t& mat)
 }
 
 
-matrix_t Leaky_ReLU(matrix_t& mat, const real_t& alpha)
+matrix_t Leaky_ReLU(matrix_t& mat)
 {
+    const real_t alpha = real_t("0.01");
     matrix_t result(mat);
     for (int i = 0; i < mat.get_rows(); i++)
         for (int j = 0; j < mat.get_cols(); j++)
@@ -49,153 +48,301 @@ matrix_t ExpLU(matrix_t& mat)
 }
 
 
-// neural network class implementation
-
-// constructors
-neural_network::neural_network(void)
+matrix_t Linear(matrix_t& mat)
 {
-    this->Weights = vector<matrix_t>();
-    this->Biases = vector<matrix_t>();
-    this->functions = vector<string>();
+    return mat;
 }
 
 
-// add layers
-void neural_network::add_layer(const int32_t& input_size,  const int32_t& output_size,  ActivationFunction function) { return this->add_layer((uint64_t)input_size, (uint64_t)output_size, function); }
-
-void neural_network::add_layer(const uint32_t& input_size, const uint32_t& output_size, ActivationFunction function) { return this->add_layer((uint64_t)input_size, (uint64_t)output_size, function); }
-
-void neural_network::add_layer(const int64_t& input_size,  const int64_t& output_size,  ActivationFunction function) { return this->add_layer((uint64_t)input_size, (uint64_t)output_size, function); }
-
-void neural_network::add_layer(const uint64_t& input_size, const uint64_t& output_size, ActivationFunction function)
+// real_t -> real_t
+real_t Sigmoid(real_t x)
 {
-    // first layes
-    if (this->Weights.size() == 0)
+    return real_t(1) / (real_t(1) + exp(-x));
+}
+
+
+real_t Tanh(real_t x)
+{
+    // TODO
+    return x;
+}
+
+
+real_t ReLU(real_t x)
+{
+    return x > 0 ? x : 0;
+}
+
+
+real_t Leaky_ReLU(real_t x)
+{
+    const real_t alpha = real_t("0.01");
+    return x > 0 ? x : alpha;
+}
+
+
+real_t ExpLU(real_t x)
+{
+    // TODO
+}
+
+
+real_t Linear(real_t x)
+{
+    return x;
+}
+
+real_t (*Act_to_func(ActivationFunction func))(real_t)
+{
+    switch (func)
     {
-        this->Weights.push_back(matrix_t(input_size, output_size));
-        this->Biases.push_back(matrix_t(output_size, 1));
-        switch (function)
-        {
-            case SIGMOID:
-                this->functions.push_back("Sigmoid");
-                break;
-            case TANH:
-                this->functions.push_back("Tanh");
-                break;
-            case RELU:
-                this->functions.push_back("ReLU");
-                break;
-            case LRELU:
-                this->functions.push_back("Leaky_ReLU");
-                break;
-            case ELU:
-                this->functions.push_back("ExpLU");
-                break;
-        }
-        return ;
+    case SIGMOID:
+        return Sigmoid;
+    case TANH:
+        return Tanh;
+    case RELU:
+        return ReLU;
+    case LRELU:
+        return Leaky_ReLU;
+    case ELU:
+        return ExpLU;
+    case LINEAR:
+        return Linear;
+    default:
+        return nullptr;
     }
-    // output dimension must be defined by user
-    if (output_size == 0)
+}
+
+// ================================================================================================================================
+// layer, neural network implementation
+// ================================================================================================================================
+
+// layer class
+
+layer_t::layer_t(const layer_t& other)
+{
+    W = other.W;
+    b = other.b;
+    func = other.func;
+}
+
+layer_t::layer_t(int input_size, int output_size, const ActivationFunction& func)
+{
+    W = matrix_t(input_size, output_size);
+    b = matrix_t(1, output_size);
+    this->func = func;
+}
+
+layer_t::layer_t(const matrix_t& W, const matrix_t& b, const ActivationFunction& func)
+{
+    this->W = W;
+    this->b = b;
+    this->func = func;
+}
+
+
+// getters
+const matrix_t& layer_t::get_W(void) const { return W; }
+const matrix_t& layer_t::get_b(void) const { return b; }
+const matrix_t& layer_t::get_X(void) const { return X; }
+const matrix_t& layer_t::get_Z(void) const { return Z; }
+const matrix_t& layer_t::get_d(void) const { return d; }
+
+// forward propagation
+matrix_t layer_t::forward(const matrix_t& X)
+{
+    this->X = X;
+    this->Z = this->X * this->W + this->b.broadcast(X.get_rows(), W.get_cols());
+    auto func_ptr = Act_to_func(this->func);
+    switch (this->func)
     {
-        cout << "Error: output dimension must be defined by user, but given 0" << endl;
-        throw std::runtime_error("output_size must be greater than 0");
+    case SIGMOID:
+        return Sigmoid(this->Z);
+    case TANH:
+        return Tanh(this->Z);
+    case RELU:
+        return ReLU(this->Z);
+    case LRELU:
+        return Leaky_ReLU(this->Z);
+    case ELU:
+        return ExpLU(this->Z);
+    case LINEAR:
+        return Linear(this->Z);
+    default:
+        cout << "Error: unknown activation function" << endl;
+        exit(1);
     }
-    if (input_size > 0 && input_size != this->Biases.back().get_rows())
+}
+
+// backward propagation
+/* @param
+ * delta_:  delta of next layer
+ * W_:      weight of next layer
+ */
+matrix_t layer_t::backward(const matrix_t& delta_, const matrix_t& W_)
+{
+    matrix_t W = W_;
+    matrix_t dt = delta_;
+    // cout << "delta : " << dt << endl;
+    // cout << "W : " << W << endl;
+    matrix_t delta = delta_ * trans(W);
+    auto func_ptr = Act_to_func(this->func);
+    // Hadamard product
+    for (int i = 0; i < delta.get_rows(); i++)
+        for (int j = 0; j < delta.get_cols(); j++)
+            delta[i][j] *= df(func_ptr, this->Z[i][j]);
+    return this->d = delta;
+}
+
+// backword propagation (last layer)
+/* @param
+ * output:  output of neural network
+ * labels:  labels of training data
+ */
+matrix_t layer_t::backlast(const matrix_t& output, const matrix_t& labels)
+{
+    matrix_t delta = output - labels;
+    auto func_ptr = Act_to_func(this->func);
+    // Hadamard product
+    for (int i = 0; i < delta.get_rows(); i++)
+        for (int j = 0; j < delta.get_cols(); j++)
+            delta[i][j] *= df(func_ptr, this->Z[i][j]);
+    return this->d = delta;
+}
+
+// update weights
+void layer_t::update(const real_t& learning_rate)
+{
+    this->W -= (trans(X) * this->d) * learning_rate;
+    this->b -= this->d.sum_rows() * learning_rate;
+}
+
+// print
+void layer_t::print(void) const
+{
+    cout << "|--------------------------------------------------" << endl;
+    cout << "| input:  " << this->W.get_rows() << endl;
+    cout << "| output: " << this->W.get_cols() << endl;
+    string func_name = "";
+    switch (this->func)
     {
-        cout << "Error: input size must be equal with last layer (which is " << this->Biases.back().get_rows() << "), got " << input_size << endl;
-        throw std::runtime_error("input_size must be equal to the previous layer's output_size");
+    case SIGMOID:
+        func_name = "Sigmoid";
+        break;
+    case TANH:
+        func_name = "Tanh";
+        break;
+    case RELU:
+        func_name = "ReLU";
+        break;
+    case LRELU:
+        func_name = "Leaky ReLU";
+        break;
+    case ELU:
+        func_name = "ExpLU";
+        break;
+    case LINEAR:
+        func_name = "Linear";
+        break;
+    default:
+        func_name = "Unknown";
+        break;
     }
-    // automatically fix dimension
-    if (input_size < 1)
-    {
-        uint64_t dim = this->Weights.back().get_cols();
-        this->Weights.push_back(matrix_t(dim, output_size));
-        this->Biases.push_back(matrix_t(output_size, (uint64_t)1));
-    }
-    else
-    {
-        // it is slow for huge matrix
-        this->Weights.push_back(matrix_t(input_size, output_size));
-        this->Biases.push_back(matrix_t(output_size, (uint64_t)1));
-    }
-    switch (function)
-    {
-        case SIGMOID:
-            this->functions.push_back("Sigmoid");
-            break;
-        case TANH:
-            this->functions.push_back("Tanh");
-            break;
-        case RELU:
-            this->functions.push_back("ReLU");
-            break;
-        case LRELU:
-            this->functions.push_back("Leaky_ReLU");
-            break;
-        case ELU:
-            this->functions.push_back("ExpLU");
-            break;
-        default:
-            this->functions.push_back("Linear");
-            break;
-    }
+    cout << "| func:   " << func_name << endl;
     return ;
 }
 
 
-// describe the neural network
-void neural_network::describe(void)
+// neural network
+
+// constructor
+neural_network_t::neural_network_t(void)
 {
-    cout << "==========================================================" << endl;
-    cout << "| Neural network:" << endl;
-    cout << "| - #layers: " << this->Weights.size() << endl;
-    cout << "|---------------------------------------------------------" << endl;
-    for (uint64_t i = 0; i < this->Weights.size(); i++)
+    this->layers.clear();
+}
+
+neural_network_t::neural_network_t(const neural_network_t& other)
+{
+    this->layers = other.layers;
+}
+
+// getters
+const vector<layer_t>& neural_network_t::get_layers(void) const { return this->layers; }
+const matrix_t& neural_network_t::get_input(void)  const { return this->input;  }
+const matrix_t& neural_network_t::get_output(void) const { return this->output; }
+
+// setters (add layer)
+void neural_network_t::add_layer(const layer_t& layer)
+{
+    this->layers.push_back(layer);
+}
+
+void neural_network_t::add_layer(const matrix_t& Weight, const matrix_t& bias, const ActivationFunction& func)
+{
+    layer_t layer(Weight, bias, func);
+    this->layers.push_back(layer);
+}
+
+void neural_network_t::add_layer(const int32_t& input_size, const int32_t& output_size, const ActivationFunction& func)
+{
+    layer_t layer(input_size, output_size, func);
+    this->layers.push_back(layer);
+}
+
+
+// forward propagation
+matrix_t neural_network_t::forward(void)
+{
+    matrix_t X = this->input;
+    for (auto& layer : this->layers)
+        X = layer.forward(X);
+    return this->output = X;
+}
+
+// backward propagation
+void neural_network_t::backward(void)
+{
+    // last layer
+    auto delta = this->layers.back().backlast(this->output, this->labels);
+    this->layers.back().update(this->learning_rate);
+    // hidden layers
+    for (int i = this->layers.size() - 2; i >= 0; i--)
     {
-        cout << "| layer: " << i+1 << endl;
-        cout << "|\tinput  dimension: " << this->Weights[i].get_rows() << endl;
-        cout << "|\toutput dimension: " << this->Weights[i].get_cols() << endl;
-        cout << "|\tactivation function: " << this->functions[i] << endl;
-        cout << "|---------------------------------------------------------" << endl;
+        delta = this->layers[i].backward(delta, this->layers[i+1].get_W());
+        // cout << "delta : " << delta << endl;
+        this->layers[i].update(this->learning_rate);
     }
-    cout << "| Summary:" << endl;
-    cout << "| input dimension: " << this->Weights[0].get_rows() << endl;
-    cout << "| output dimension: " << this->Weights.back().get_cols() << endl;
-    cout << "==========================================================" << endl;
     return ;
 }
 
-
-// run the neural network
-matrix_t neural_network::run(matrix_t input)
+// train
+void neural_network_t::train(const matrix_t& input, const matrix_t& labels, const real_t& learning_rate)
 {
-    // check input dimension
-    if (input.get_rows() != this->Weights.front().get_rows())
-    {
-        cout << "Error: input dimension does not match" << endl;
-        cout << "input of nn:   (" << this->Weights.front().get_rows() << " " << this->Weights.front().get_cols() << ")" << endl;
-        cout << "input of user: (" << input.get_rows() << " " << input.get_cols() << ")" << endl;
-        throw std::runtime_error("input dimension does not match");
-    }
-
-    // run the network
-    matrix_t Z = input;
-    for (uint64_t i = 0; i < this->Weights.size(); i++)
-    {
-        // Z = WX + b
-        Z = trans(this->Weights[i]) * Z + this->Biases[i];
-        // Z := func(Z)
-        if      (this->functions[i] == "Sigmoid")
-            Z = Sigmoid(Z);
-        else if (this->functions[i] == "Tanh")
-            Z = Tanh(Z);
-        else if (this->functions[i] == "ReLU")
-            Z = ReLU(Z);
-        else if (this->functions[i] == "Leaky_ReLU")
-            Z = Leaky_ReLU(Z, 0.01);
-        else if (this->functions[i] == "ExpLU")
-            Z = ExpLU(Z);
-    }
-    return Z;
+    this->input = input;
+    this->labels = labels;
+    this->learning_rate = learning_rate;
+    this->forward();
+    this->backward();
+    return ;
 }
 
+// accuracy
+// TODO
+
+// predict
+matrix_t neural_network_t::predict(const matrix_t& input)
+{
+    this->input = input;
+    this->forward();
+    return this->output;
+}
+
+// print
+void neural_network_t::print(void) const
+{
+    cout << "============================================================" << endl;
+    cout << "| neural network: " << this->layers.size() << " layers" << endl;
+    for (auto& layer : this->layers)
+        layer.print();
+    cout << "============================================================" << endl;
+}
