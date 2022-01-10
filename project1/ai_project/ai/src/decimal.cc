@@ -88,11 +88,6 @@ uint16_t real_t::get_precision(void) const { return this->precision; }
 
 void real_t::set_precision(const uint16_t& _precision) { this->precision = _precision; }
 
-void real_t::set_precision(const uint16_t& _precision)
-{
-    this->precision = _precision;
-}
-
 // unary operators
 real_t real_t::operator-() const
 {

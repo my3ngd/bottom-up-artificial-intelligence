@@ -27,19 +27,20 @@ vector<vector<real_t>> out = {
 int main(int argc, char const *argv[])
 {
     neural_network_t nn;
-    nn.add_layer(1, 10, LRELU);
-    nn.add_layer(10, 10, LRELU);
-    nn.add_layer(10, 10, LRELU);
-    nn.add_layer(10, 10, LRELU);
+    nn.add_layer(1, 10, SIGMOID);
+    nn.add_layer(10, 10, SIGMOID);
+    nn.add_layer(10, 10, SIGMOID);
+    nn.add_layer(10, 10, SIGMOID);
     nn.add_layer(10, 1, LINEAR);
     nn.print();
 
+    real_t lr("0.01");
     for (int i = 0; i < 1000; i++)
     {
         cout << "step " << i << endl;
         // char stop;
         // cin >> stop;
-        nn.train(in, out, real_t("0.1"));
+        nn.train(in, out, lr);
         nn.forward();
         matrix_t res = nn.get_output();
         // cout << i << endl;

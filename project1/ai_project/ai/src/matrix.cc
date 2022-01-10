@@ -437,9 +437,3 @@ matrix_t df(const func_t& func, matrix_t x)
     return res;
 }
 
-// derivative
-matrix_t df(const func_t& func, matrix_t x)
-{
-    // code
-}
-
