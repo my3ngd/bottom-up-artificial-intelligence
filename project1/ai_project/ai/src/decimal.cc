@@ -1,5 +1,8 @@
 #include "decimal.h"
 
+real_t e("2.7182818284590452353602874713526624977572470936999595749669676277240766303535475945713821785251664274");
+real_t PI("3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679");
+
 // --------------------------------------------------------------------------------------------------------------------
 // real number
 
@@ -108,7 +111,6 @@ real_t real_t::operator/(real_t other) const
 {
     // code
 }
-
 
 // binary friend operators
 real_t operator+(const real_t& real, const int64_t& other)
@@ -228,27 +230,21 @@ bool real_t::operator> (const real_t& other) const
     // code
 }
 
-bool real_t::operator<=(const real_t& other) const
+void real_t::remove_unused_zeros(void)
 {
     // code
 }
-
-bool real_t::operator>=(const real_t& other) const
-{
-    // code
-}
-
 
 // stream operators
-std::ostream& operator<<(std::ostream& os, const real_t& real)
+std::ostream& operator<<(std::ostream& os, real_t real)
 {
     // code
     return os;
 }
 
-std::istream& operator>>(std::istream& is, real_t& real)
+std::istream& operator>>(std::istream& is, real_t real)
 {
-    // code
+    // TODO
     return is;
 }
 
@@ -289,27 +285,18 @@ real_t round(real_t real)
     // code
 }
 
-real_t trunc(real_t real)
+real_t realrand(real_t _min, real_t _max)
 {
     // code
 }
 
-real_t frac(real_t real)
-{
-    // code
-}
 
 real_t exp(real_t real)
 {
     // code
 }
 
-real_t log(real_t real)
-{
-    // code
-}
-
-real_t log10(real_t real)
+real_t ln(real_t real)
 {
     // code
 }
@@ -329,28 +316,9 @@ real_t tan(real_t real)
     // code
 }
 
-real_t asin(real_t real)
-{
-    // code
-}
 
-real_t acos(real_t real)
-{
-    // code
-}
-
-real_t atan(real_t real)
-{
-    // code
-}
-
-/*
-real_t sinh(real_t real)
-{
-    // code
-}
-
-real_t cosh(real_t real)
+// activation functions
+real_t sigmoid(real_t real)
 {
     // code
 }
@@ -360,20 +328,31 @@ real_t tanh(real_t real)
     // code
 }
 
-real_t asinh(real_t real)
+real_t relu(real_t real)
 {
     // code
 }
 
-real_t acosh(real_t real)
+real_t leaky_relu(real_t real)
 {
     // code
 }
 
-real_t atanh(real_t real)
+real_t exp_lu(real_t real)
 {
     // code
 }
 
-// */
+real_t linear(real_t real)
+{
+    // code
+}
+
+
+
+// derivative real_t by function f(x)
+real_t df(const func_t& func, real_t x)
+{
+    // code
+}
 

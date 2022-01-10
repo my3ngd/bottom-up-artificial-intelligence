@@ -4,6 +4,10 @@
 // Matrices
 
 // constructors
+matrix_t::matrix_t(void)
+{
+    // code
+}
 
 matrix_t::matrix_t(const uint16_t& rows, const uint16_t& cols)
 {
@@ -26,15 +30,9 @@ matrix_t::matrix_t(const vector<vector<real_t>>& mat)
 }
 
 // getters and setters
-uint16_t matrix_t::get_rows(void) const
-{
-    // code
-}
+uint16_t matrix_t::get_rows(void) const { return this->rows; }
 
-uint16_t matrix_t::get_cols(void) const
-{
-    // code
-}
+uint16_t matrix_t::get_cols(void) const { return this->cols; }
 
 
 // unary operators
@@ -89,30 +87,15 @@ matrix_t& matrix_t::operator=(const matrix_t& other)
     // code
 }
 
-matrix_t& matrix_t::operator+=(const matrix_t& other)
-{
-    // code
-}
+matrix_t& matrix_t::operator+=(const matrix_t& other) { return *this = *this + other; }
 
-matrix_t& matrix_t::operator-=(const matrix_t& other)
-{
-    // code
-}
+matrix_t& matrix_t::operator-=(const matrix_t& other) { return *this = *this - other; }
 
-matrix_t& matrix_t::operator*=(const matrix_t& other)
-{
-    // code
-}
+matrix_t& matrix_t::operator*=(const matrix_t& other) { return *this = *this * other; }
 
-matrix_t& matrix_t::operator*=(const real_t& other)
-{
-    // code
-}
+matrix_t& matrix_t::operator*=(const real_t& other) { return *this = *this * other; }
 
-matrix_t& matrix_t::operator/=(const real_t& other)
-{
-    // code
-}
+matrix_t& matrix_t::operator/=(const real_t& other) { return *this = *this / other; }
 
 
 // comparison
@@ -121,10 +104,7 @@ bool matrix_t::operator==(const matrix_t& other) const
     // code
 }
 
-bool matrix_t::operator!=(const matrix_t& other) const
-{
-    // code
-}
+bool matrix_t::operator!=(const matrix_t& other) const { return !(*this == other); }
 
 
 // indexing
@@ -133,14 +113,33 @@ vector<real_t>& matrix_t::operator[](const uint32_t& index)
     // code
 }
 
-vector<real_t>& matrix_t::operator[](const int32_t& index)
+vector<real_t>& matrix_t::operator[](const int32_t& index)  { return this->operator[](static_cast<uint32_t>(index)); }
+
+
+// broadcast
+matrix_t matrix_t::broadcast(const int64_t& _rows, const int64_t& _cols) const
 {
     // code
 }
 
 
+// reduce dimension
+// [n, m] -> [1, m]
+matrix_t matrix_t::sum_rows(void) const
+{
+    // code
+}
+
+// [n, m] -> [n, 1]
+matrix_t matrix_t::sum_cols(void) const
+{
+    // code
+}
+
+
+
 // stream operators
-std::ostream& operator<<(std::ostream& os, matrix_t& matrix)
+std::ostream& operator<<(std::ostream& os, matrix_t matrix)
 {
     // code
 }
@@ -173,6 +172,12 @@ real_t det(matrix_t& matrix)
 }
 
 real_t trace(matrix_t& matrix)
+{
+    // code
+}
+
+// derivative
+matrix_t df(const func_t& func, matrix_t x)
 {
     // code
 }
