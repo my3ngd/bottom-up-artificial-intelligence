@@ -3,12 +3,7 @@
 /* TODO list
  * output formmating
  * power function
- * log/ln
- * asin
- * tanh
  */
-
-int print_precision = -1;
 
 real_t e("2.7182818284590452353602874713526624977572470936999595749669676277240766303535475945713821785251664274");
 real_t PI("3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679");
@@ -269,12 +264,20 @@ void real_t::remove_unused_zeros(void)
 }
 
 // stream operators
-std::ostream& operator<<(std::ostream& os, const real_t& real)
+std::ostream& operator<<(std::ostream& os, real_t real)
 {
+    // remove leading zeros
+    while (real.get_val()%10 == 0 && real.get_precision() > 0)
+    {
+        real.set_val(real.get_val()/10);
+        real.set_precision(real.get_precision()-1);
+    }
+
     if (real.get_val() == 0)
         return os << "0";
     if (real.get_precision() == 0)
         return os << real.get_val();
+
     string output_string = real.val.get_str();
     bool is_signed = output_string[0] == '-';
     if (is_signed)
@@ -289,15 +292,13 @@ std::ostream& operator<<(std::ostream& os, const real_t& real)
         return os << output_string;
     }
     // under 1
-    os << "0";
-    if (real.get_precision() != output_string.size())
-        os << '.';
+    os << "0.";
     for (int i = 0; i < real.get_precision() - output_string.size(); i++)
         os << "0";
     return os << output_string;
 }
 
-std::istream& operator>>(std::istream& is, real_t& real)
+std::istream& operator>>(std::istream& is, real_t real)
 {
     // TODO
     return is;
@@ -372,28 +373,40 @@ real_t round(real_t real)
     return res;
 }
 
-real_t trunc(real_t real)
+real_t realrand(real_t _min, real_t _max)
 {
-    // code
+    string st = "";
+    for (int i = 0; i < RAND_MAX_DIGIT; i++)
+        st += '9';
+    real_t _MAX(st);
+    // get random number in [0, 1]
+    string res_str = "";
+    for (int i = 0; i < RAND_MAX_DIGIT; i++)
+        res_str += std::to_string(rand()%10);
+    // remove leading zeros
+    while (res_str[0] == '0')
+        res_str.erase(0, 1);
+
+    real_t res(res_str);
+    return _min + res * (_max - _min) / _MAX;
 }
 
-real_t frac(real_t real)
-{
-    // code
-}
 
 real_t exp(real_t real)
 {
-    if (real.is_int())
+    if (real.is_int() && real >= 0)
         return pow(e, real);
-    // taylor series for exp(x)
+    /* taylor series for exp(x)
+     * exp(x) = 1 + x + x^2/2! + x^3/3! + ...
+     */
     real_t res = 1;
     real_t x = real;
     real_t f = 1;
-    for (real_t i = 1; i < 100; i++)
+    for (real_t i = 1; i < TAYLOR_LOOPS; i++)
     {
-        f *= x / i;
-        res += f;
+        f *= i;
+        res += x / f;
+        x *= real;
     }
     return res;
 }
@@ -408,16 +421,6 @@ real_t ln(real_t real)
     const uint16_t LN_LOOP_COUNT = TAYLOR_LOOPS;
     // ln(1+x) = Sum(n=1...inf, (-1)^(n+1)*x^n/n)
     // TODO
-}
-
-real_t log(real_t real, real_t base)
-{
-    // code
-}
-
-real_t log10(real_t real)
-{
-    // code
 }
 
 real_t sin(real_t real)
@@ -464,64 +467,79 @@ real_t tan(real_t real)
     return sin(real) / cos(real);
 }
 
-real_t asin(real_t real)
+
+// activation functions
+real_t sigmoid(real_t real)
 {
-    const uint16_t ASIN_LOOP_COUNT = TAYLOR_LOOPS;
-    // get asin(real) in radians using the Taylor series
-    // TODO: https://namu.wiki/w/%ED%85%8C%EC%9D%BC%EB%9F%AC%20%EA%B8%89%EC%88%98/%EB%AA%A9%EB%A1%9D#toc
-    // return res;
+    return real_t(1) / (real_t(1) + exp(-real));
 }
 
-real_t acos(real_t real)
+real_t tanh(real_t real)
 {
-    // acos(x) is pi/2 - asin(x)
-    const real_t half_PI = PI/2;
-    return half_PI - asin(real);
+    return sigmoid(real) * 2 - real_t(1);
 }
 
-real_t atan(real_t real)
+real_t relu(real_t real)
 {
-    // code
+    return real > 0 ? real : real_t(0);
 }
 
+real_t leaky_relu(real_t real)
+{
+    return real > 0 ? real : real_t("0.01") * real;
+}
 
-// real_t sinh(real_t real)
-// {
-//     // code
-// }
+real_t exp_lu(real_t real)
+{
+    if (real >= 0)   return real;
+    return exp(real) - 1;
+}
 
-// real_t cosh(real_t real)
-// {
-//     // code
-// }
+real_t linear(real_t real)
+{
+    return real;
+}
 
-
-// real_t tanh(real_t real)
-// {
-//     // code
-// }
-
-
-// real_t asinh(real_t real)
-// {
-//     // code
-// }
-
-// real_t acosh(real_t real)
-// {
-//     // code
-// }
-
-// real_t atanh(real_t real)
-// {
-//     // code
-// }
 
 
 // derivative real_t by function f(x)
-real_t df(real_t (*f)(real_t), real_t x)
+real_t df(const func_t& func, real_t x)
 {
-    const real_t EPSILON("0.0000001");
-    return (f(x + EPSILON) - f(x - EPSILON)) / (EPSILON * real_t(2));
+    switch (func)
+    {
+    case EXP:
+        return exp(x);
+    case LN:
+        return real_t(1) / x;
+    case SQRT:
+        return real_t(1) / (real_t(2) * sqrt(x));
+    case SIN:
+        return cos(x);
+    case COS:
+        return -sin(x);
+    case TAN:
+        return real_t(1) + tan(x) * tan(x);
+    case SIGMOID:
+    {
+        real_t sig = sigmoid(x);
+        return sig * (real_t(1) - sig);
+    }
+    case TANH:
+    {
+        real_t _tanh = tanh(x);
+        return real_t(1) - _tanh * _tanh;
+    }
+    case RELU:
+        return x > 0 ? real_t(1) : real_t(0);
+    case LRELU:
+        return x > 0 ? real_t("1") : real_t("0.01");
+    case ELU:
+        return x > 0 ? real_t(1) : exp(x);
+    case LINEAR:
+        return real_t(1);
+    default:
+        cout << "df(real_t) : error : unknown activation function" << endl;
+        throw std::runtime_error("df(real_t): unknown activation function");
+    }
 }
 

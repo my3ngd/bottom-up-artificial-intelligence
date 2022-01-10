@@ -3,15 +3,6 @@
 
 #include "matrix.h"
 
-// activation function
-enum ActivationFunction {
-    SIGMOID,
-    TANH,
-    RELU,
-    LRELU,
-    ELU,
-    LINEAR,
-};
 
 // matrix_t -> matrix_t
 matrix_t Sigmoid(matrix_t&);
@@ -30,9 +21,6 @@ real_t ExpLU(real_t);
 real_t Linear(real_t);
 
 
-// function that returns function pointer (*matrix_t), with input enum ActivationFunction
-real_t (*Act_to_func(ActivationFunction func))(real_t);
-
 
 // layer class
 class layer_t
@@ -42,13 +30,14 @@ private:
     matrix_t b;  // bias
     matrix_t X;  // input
     matrix_t Z;  // output
-    ActivationFunction func;
+    func_t func;
     matrix_t d;  // gradient?
 public:
+    int layer_idx = -1;
     // constructor
     layer_t(const layer_t&);
-    layer_t(int, int, const ActivationFunction&);
-    layer_t(const matrix_t&, const matrix_t&, const ActivationFunction&);
+    layer_t(int, int, const func_t&);
+    layer_t(const matrix_t&, const matrix_t&, const func_t&);
 
     // getters
     const matrix_t& get_W(void) const;
@@ -69,6 +58,9 @@ public:
 
     // print
     void print(void) const;
+
+    // operators
+    layer_t& operator=(const layer_t&);
 };
 
 
@@ -93,8 +85,8 @@ public:
 
     // setters (add layer)
     void add_layer(const layer_t&);
-    void add_layer(const matrix_t&, const matrix_t&, const ActivationFunction&);
-    void add_layer(const int32_t&, const int32_t&, const ActivationFunction&);
+    void add_layer(const matrix_t&, const matrix_t&, const func_t&);
+    void add_layer(const int32_t&, const int32_t&, const func_t&);
 
     // forward propagation
     matrix_t forward(void);

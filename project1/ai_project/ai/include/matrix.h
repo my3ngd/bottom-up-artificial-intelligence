@@ -3,6 +3,7 @@
 
 #include "decimal.h"
 
+#define SEPERATOR "\t"
 
 // --------------------------------------------------------------------------------------------------------------------
 // Matrices
@@ -66,8 +67,8 @@ public:
     matrix_t sum_cols(void) const;
 
     // iostream
-    friend std::ostream& operator<<(std::ostream&, matrix_t&);
-    friend std::istream& operator>>(std::istream&, matrix_t&);
+    friend std::ostream& operator<<(std::ostream&, matrix_t);
+    friend std::istream& operator>>(std::istream&, matrix_t);
 };
 
 // matrix operations
@@ -79,7 +80,7 @@ real_t trace(matrix_t&);
 
 
 // derivative
-matrix_t df(real_t (*f)(real_t), matrix_t);
+matrix_t df(const func_t&, matrix_t);
 
 
 #endif  // __MATRIX_H__

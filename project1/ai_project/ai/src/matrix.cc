@@ -47,6 +47,15 @@ matrix_t::matrix_t(const uint16_t& rows, const uint16_t& cols, const char& optio
             for (int j = 0; j < cols; j++)
                 this->data[i][j] = (i == j) ? 1 : 0;
         break;
+    case 'r':
+    case 'R':
+        this->data.resize(rows);
+        for (auto& col: this->data)
+            col.resize(cols);
+        for (int i = 0; i < rows; i++)
+            for (int j = 0; j < cols; j++)
+                this->data[i][j] = realrand(-1, 1);
+        break;
     default:
         cout << "Invalid option for matrix constructor: " << __FILE__ << " -> function " << __func__ << ", line " << __LINE__ << endl;
         throw "invalid option";
@@ -283,12 +292,12 @@ matrix_t matrix_t::sum_cols(void) const
 
 
 // stream operators
-std::ostream& operator<<(std::ostream& os, matrix_t& matrix)
+std::ostream& operator<<(std::ostream& os, matrix_t matrix)
 {
     for (int i = 0; i < matrix.rows; i++)
     {
         for (int j = 0; j < matrix.cols; j++)
-            os << matrix[i][j] << " ";
+            os << matrix[i][j] << SEPERATOR;
         os << '\n';
     }
     return os;
@@ -421,17 +430,13 @@ real_t trace(matrix_t& matrix)
 }
 
 // derivative
-matrix_t df(real_t (*f)(real_t), matrix_t x)
+matrix_t df(const func_t& func, matrix_t x)
 {
-    // derivative of f(x)
     matrix_t res(x.get_rows(), x.get_cols());
+    // derivative of f(x)
     for (int i = 0; i < x.get_rows(); i++)
-    {
         for (int j = 0; j < x.get_cols(); j++)
-        {
-            res[i][j] = df(f, x[i][j]);
-        }
-    }
+            res[i][j] = df(func, x[i][j]);
     return res;
 }
 

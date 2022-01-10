@@ -18,7 +18,8 @@ using std::vector;
 using std::deque;
 
 #include "gmpxx.h"
-const uint16_t TAYLOR_LOOPS = 10;
+const uint16_t TAYLOR_LOOPS = 32;
+const uint16_t RAND_MAX_DIGIT = 10;
 
 // --------------------------------------------------------------------------------------------------------------------
 // real number
@@ -95,11 +96,11 @@ public:
     void remove_unused_zeros(void);
 
     // iostream
-    friend std::ostream& operator<<(std::ostream&, const real_t&);
-    friend std::istream& operator>>(std::istream&, real_t&);
+    friend std::ostream& operator<<(std::ostream&, real_t);
+    friend std::istream& operator>>(std::istream&, real_t);
 };
 
-// other
+// basic functions
 real_t abs(real_t);
 real_t sqrt(real_t);
 real_t pow(real_t, real_t);
@@ -107,29 +108,42 @@ real_t pow(real_t, int64_t);
 real_t floor(real_t);
 real_t ceil(real_t);
 real_t round(real_t);
-real_t trunc(real_t);
-real_t frac(real_t);
+
+real_t realrand(real_t, real_t);
+
 real_t exp(real_t);
 real_t ln(real_t);
-real_t log(real_t, real_t);
-real_t log10(real_t);
 real_t sin(real_t);
 real_t cos(real_t);
 real_t tan(real_t);
-real_t asin(real_t);
-real_t acos(real_t);
-real_t atan(real_t);
 
-// real_t sinh(real_t);
-// real_t cosh(real_t);
-// real_t tanh(real_t);
-// real_t asinh(real_t);
-// real_t acosh(real_t);
-// real_t atanh(real_t);
+// activation functionq
+real_t sigmoid(real_t);
+real_t tanh(real_t);
+real_t relu(real_t);
+real_t leaky_relu(real_t);
+real_t exp_lu(real_t);
+real_t linear(real_t);
 
+// scalar functions
+enum func_t
+{
+    EXP,    // 0
+    LN,     // 1
+    SQRT,   // 2
+    SIN,    // 3
+    COS,    // 4
+    TAN,    // 5
+    SIGMOID,// 6
+    TANH,   // 7
+    RELU,   // 8
+    LRELU,  // 9
+    ELU,    // 10
+    LINEAR, // 11
+};
 
 // derivative real_t by function f(x)
-real_t df(real_t (*f)(real_t), real_t);
+real_t df(const func_t&, real_t);
 
 extern real_t PI;
 extern real_t E;
