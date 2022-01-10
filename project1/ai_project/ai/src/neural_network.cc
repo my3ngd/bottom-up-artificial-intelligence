@@ -97,6 +97,7 @@ real_t ExpLU(real_t x)
     // TODO
 }
 
+// neural network
 
 real_t Linear(real_t x)
 {

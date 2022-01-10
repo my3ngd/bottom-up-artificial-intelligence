@@ -209,13 +209,10 @@ matrix_t& matrix_t::operator*=(const real_t& other) { return *this = *this * oth
 
 matrix_t& matrix_t::operator/=(const real_t& other) { return *this = *this / other; }
 
-
-// comparison
 bool matrix_t::operator==(const matrix_t& other) const
 {
     if (this->rows != other.rows || this->cols != other.cols)
         return false;
-
     for (int i = 0; i < this->rows; i++)
         for (int j = 0; j < this->cols; j++)
             if (this->data[i][j] != other.data[i][j])
@@ -438,5 +435,11 @@ matrix_t df(const func_t& func, matrix_t x)
         for (int j = 0; j < x.get_cols(); j++)
             res[i][j] = df(func, x[i][j]);
     return res;
+}
+
+// derivative
+matrix_t df(const func_t& func, matrix_t x)
+{
+    // code
 }
 
